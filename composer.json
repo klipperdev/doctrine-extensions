@@ -1,0 +1,44 @@
+{
+    "name": "klipper/doctrine-extensions",
+    "type": "library",
+    "description": "Doctrine Extensions component of Klipper",
+    "keywords": ["doctrine", "extensions", "validator", "unique entity"],
+    "homepage": "https://github.com/klipperdev/doctrine-extensions",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "François Pluchino",
+            "email": "francois.pluchino@klipper.dev"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.4.0",
+        "doctrine/persistence": "^1.0.0",
+        "doctrine/orm": "^2.6.0",
+        "klipper/doctrine-extra": "^2.0.0"
+    },
+    "require-dev": {
+        "doctrine/annotations": "^1.6.0",
+        "doctrine/cache": "^1.7.0",
+        "doctrine/event-manager": "^1.0.0",
+        "doctrine/reflection": "^1.0.0",
+        "symfony/http-kernel": "^4.3.0",
+        "symfony/event-dispatcher": "^4.3.0",
+        "symfony/doctrine-bridge": "^4.3.0",
+        "symfony/translation": "^4.3.0",
+        "symfony/validator": "^4.3.0"
+    },
+    "autoload": {
+        "psr-4": { "Klipper\\Component\\DoctrineExtensions\\": "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
+    }
+}

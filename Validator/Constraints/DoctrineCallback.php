@@ -57,8 +57,6 @@ class DoctrineCallback extends Constraint
 
     /**
      * Invocation through annotations with an array parameter only.
-     *
-     * @param array $options
      */
     protected function initArraySingleOption(array &$options): void
     {

@@ -72,14 +72,10 @@ class Util
     /**
      * Pre validate entity.
      *
-     * @param ManagerRegistry $registry
-     * @param object          $entity
-     * @param Constraint      $constraint
+     * @param object $entity
      *
      * @throws UnexpectedTypeException
      * @throws ConstraintDefinitionException
-     *
-     * @return ObjectManager
      */
     public static function getObjectManager(ManagerRegistry $registry, $entity, Constraint $constraint): ObjectManager
     {
@@ -90,8 +86,6 @@ class Util
     }
 
     /**
-     * @param Constraint $constraint
-     *
      * @throws UnexpectedTypeException
      * @throws ConstraintDefinitionException
      */
@@ -115,13 +109,9 @@ class Util
     }
 
     /**
-     * @param ManagerRegistry $registry
-     * @param object          $entity
-     * @param UniqueEntity    $constraint
+     * @param object $entity
      *
      * @throws ConstraintDefinitionException
-     *
-     * @return ObjectManager
      */
     private static function findObjectManager(ManagerRegistry $registry, $entity, UniqueEntity $constraint): ObjectManager
     {

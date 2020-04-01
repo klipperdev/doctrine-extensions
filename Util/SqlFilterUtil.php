@@ -94,8 +94,6 @@ class SqlFilterUtil
      *
      * @param null|ObjectManager $om   The object manager instance
      * @param string             $name The filter name
-     *
-     * @return bool
      */
     public static function isEnabled(?ObjectManager $om, string $name): bool
     {
@@ -119,8 +117,6 @@ class SqlFilterUtil
      * @param string[]    $filters        The filters names to be found
      * @param SQLFilter[] $enabledFilters The enabled SQL Filters
      * @param bool        $all            Force all SQL Filter
-     *
-     * @return array
      */
     protected static function doFindFilters(array $filters, array $enabledFilters, bool $all): array
     {

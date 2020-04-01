@@ -65,17 +65,11 @@ class DriverMock implements Driver
         return $this->_schemaManagerMock;
     }
 
-    /**
-     * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
-     */
     public function setDatabasePlatform(AbstractPlatform $platform): void
     {
         $this->_platformMock = $platform;
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\AbstractSchemaManager $sm
-     */
     public function setSchemaManager(AbstractSchemaManager $sm): void
     {
         $this->_schemaManagerMock = $sm;

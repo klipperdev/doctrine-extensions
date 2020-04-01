@@ -28,8 +28,6 @@ class DoctrineCallbackValidator extends ConstraintValidator
 
     /**
      * Constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -61,12 +59,9 @@ class DoctrineCallbackValidator extends ConstraintValidator
     }
 
     /**
-     * @param mixed            $object
-     * @param DoctrineCallback $constraint
+     * @param mixed $object
      *
      * @throws ConstraintDefinitionException
-     *
-     * @return bool
      */
     private function doValidateCallback($object, DoctrineCallback $constraint): bool
     {
@@ -86,8 +81,7 @@ class DoctrineCallbackValidator extends ConstraintValidator
     }
 
     /**
-     * @param mixed            $object
-     * @param DoctrineCallback $constraint
+     * @param mixed $object
      *
      * @throws ConstraintDefinitionException
      * @throws \ReflectionException

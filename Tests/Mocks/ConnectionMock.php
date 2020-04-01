@@ -57,7 +57,6 @@ class ConnectionMock extends Connection
     private $_executeUpdates = [];
 
     /**
-     * @param array                              $params
      * @param \Doctrine\DBAL\Driver              $driver
      * @param null|\Doctrine\DBAL\Configuration  $config
      * @param null|\Doctrine\Common\EventManager $eventManager
@@ -146,9 +145,6 @@ class ConnectionMock extends Connection
         $this->_fetchOneResult = $fetchOneResult;
     }
 
-    /**
-     * @param null|\Exception $exception
-     */
     public function setFetchOneException(\Exception $exception = null): void
     {
         $this->_fetchOneException = $exception;
@@ -170,9 +166,6 @@ class ConnectionMock extends Connection
         $this->_lastInsertId = $id;
     }
 
-    /**
-     * @param Statement $result
-     */
     public function setQueryResult(Statement $result): void
     {
         $this->_queryResult = $result;

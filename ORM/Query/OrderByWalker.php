@@ -83,7 +83,7 @@ class OrderByWalker extends TreeWalkerAdapter
                 $meta = $components[$alias]['metadata'];
 
                 if (!$meta->hasField($field)) {
-                    throw new \UnexpectedValueException("There is no such field [{$field}] in the given Query component, aliased by [${alias}]");
+                    throw new \UnexpectedValueException("There is no such field [{$field}] in the given Query component, aliased by [{$alias}]");
                 }
             } else {
                 if (!\array_key_exists($field, $components)) {

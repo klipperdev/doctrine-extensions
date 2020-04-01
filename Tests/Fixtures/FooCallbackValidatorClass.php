@@ -23,8 +23,7 @@ class FooCallbackValidatorClass
     /**
      * Validates static method in class.
      *
-     * @param object                    $object
-     * @param ExecutionContextInterface $context
+     * @param object $object
      *
      * @return bool
      */

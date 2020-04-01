@@ -23,13 +23,6 @@ use Doctrine\ORM\Mapping as ORM;
 class AssociationEntity
 {
     /**
-     * @var int
-     * @ORM\Id @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="SingleIntIdEntity")
      *
      * @var SingleIntIdEntity
@@ -39,11 +32,17 @@ class AssociationEntity
     /**
      * @ORM\ManyToOne(targetEntity="CompositeIntIdEntity")
      * @ORM\JoinColumns({
-     *  @ORM\JoinColumn(name="composite_id1", referencedColumnName="id1"),
-     *  @ORM\JoinColumn(name="composite_id2", referencedColumnName="id2")
+     *     @ORM\JoinColumn(name="composite_id1", referencedColumnName="id1"),
+     *     @ORM\JoinColumn(name="composite_id2", referencedColumnName="id2")
      * })
      *
      * @var CompositeIntIdEntity
      */
     public $composite;
+    /**
+     * @var int
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 }

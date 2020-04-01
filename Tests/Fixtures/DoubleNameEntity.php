@@ -25,12 +25,6 @@ use Doctrine\ORM\Mapping\Id;
 class DoubleNameEntity
 {
     /**
-     * @Id
-     * @Column(type="integer")
-     */
-    protected $id;
-
-    /**
      * @Column(type="string")
      */
     public $name;
@@ -39,6 +33,11 @@ class DoubleNameEntity
      * @Column(type="string", nullable=true)
      */
     public $name2;
+    /**
+     * @Id
+     * @Column(type="integer")
+     */
+    protected $id;
 
     public function __construct(int $id, string $name, ?string $name2)
     {

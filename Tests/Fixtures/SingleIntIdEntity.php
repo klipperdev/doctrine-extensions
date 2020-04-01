@@ -25,12 +25,6 @@ use Doctrine\ORM\Mapping\Id;
 class SingleIntIdEntity
 {
     /**
-     * @Id
-     * @Column(type="integer")
-     */
-    protected $id;
-
-    /**
      * @Column(type="string", nullable=true)
      */
     public $name;
@@ -39,6 +33,11 @@ class SingleIntIdEntity
      * @Column(type="array", nullable=true)
      */
     public $phoneNumbers = [];
+    /**
+     * @Id
+     * @Column(type="integer")
+     */
+    protected $id;
 
     public function __construct(?int $id, ?string $name)
     {

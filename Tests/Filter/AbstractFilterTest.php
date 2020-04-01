@@ -53,29 +53,29 @@ final class AbstractFilterTest extends TestCase
         /** @var Connection|MockObject $connection */
         $connection = $this->getMockBuilder(Connection::class)->disableOriginalConstructor()->getMock();
 
-        $meta->expects($this->any())
+        $meta->expects(static::any())
             ->method('getName')
             ->willReturn(\stdClass::class)
         ;
 
-        $meta->expects($this->any())
+        $meta->expects(static::any())
             ->method('getColumnName')
             ->willReturnCallback(function ($v) {
                 return $v;
             })
         ;
 
-        $em->expects($this->any())
+        $em->expects(static::any())
             ->method('getFilters')
             ->willReturn(new FilterCollection($em))
         ;
 
-        $em->expects($this->any())
+        $em->expects(static::any())
             ->method('getConnection')
             ->willReturn($connection)
         ;
 
-        $em->expects($this->any())
+        $em->expects(static::any())
             ->method('getClassMetadata')
             ->willReturnCallback(function ($v) use ($meta) {
                 return $v === $meta->getName()
@@ -84,7 +84,7 @@ final class AbstractFilterTest extends TestCase
             })
         ;
 
-        $connection->expects($this->any())
+        $connection->expects(static::any())
             ->method('quote')
             ->willReturnCallback(function ($v) {
                 return '"'.$v.'"';
@@ -92,12 +92,12 @@ final class AbstractFilterTest extends TestCase
         ;
 
         $filter = new BarFilter($em);
-        $this->assertInstanceOf(AbstractFilter::class, $filter);
+        static::assertInstanceOf(AbstractFilter::class, $filter);
 
         if (null !== $value) {
             $filter->setParameter('foo_boolean', $value, 'boolean');
         }
 
-        $this->assertSame($expected, $filter->addFilterConstraint($meta, 'f'));
+        static::assertSame($expected, $filter->addFilterConstraint($meta, 'f'));
     }
 }

@@ -84,8 +84,6 @@ abstract class AbstractFilter extends SQLFilter implements EnableFilterInterface
      *
      * @param ClassMetaData $targetEntity     The class metadata of target entity
      * @param string        $targetTableAlias The table alias of target entity
-     *
-     * @return string
      */
     abstract protected function doAddFilterConstraint(ClassMetadata $targetEntity, string $targetTableAlias): string;
 
@@ -93,8 +91,6 @@ abstract class AbstractFilter extends SQLFilter implements EnableFilterInterface
      * Check if the target entity is supported by the sql filter.
      *
      * @param ClassMetadata $targetEntity class metadata of target entity
-     *
-     * @return bool
      */
     protected function supports(ClassMetadata $targetEntity): bool
     {
@@ -105,8 +101,6 @@ abstract class AbstractFilter extends SQLFilter implements EnableFilterInterface
      * Get the entity manager.
      *
      * @throws
-     *
-     * @return EntityManagerInterface
      */
     protected function getEntityManager(): EntityManagerInterface
     {
@@ -123,8 +117,6 @@ abstract class AbstractFilter extends SQLFilter implements EnableFilterInterface
      * Get the class metadata.
      *
      * @param string $classname The class name
-     *
-     * @return ClassMetadata
      */
     protected function getClassMetadata(string $classname): ClassMetadata
     {

@@ -50,7 +50,7 @@ final class OrderByWalkerTest extends AbstractOrmTestCase
         $query->setHint(OrderByWalker::HINT_SORT_DIRECTION, ['desc']);
 
         $expected = 'SELECT u0_.id AS id_0, u0_.username AS username_1 FROM users u0_ ORDER BY u0_.username DESC';
-        $this->assertSame($expected, $query->getSQL());
+        static::assertSame($expected, $query->getSQL());
     }
 
     public function testOrderMultipleFields(): void
@@ -68,7 +68,7 @@ final class OrderByWalkerTest extends AbstractOrmTestCase
         $query->setHint(OrderByWalker::HINT_SORT_DIRECTION, ['desc', 'asc']);
 
         $expected = 'SELECT u0_.id AS id_0, u0_.username AS username_1 FROM users u0_ ORDER BY u0_.username DESC, u0_.id ASC';
-        $this->assertSame($expected, $query->getSQL());
+        static::assertSame($expected, $query->getSQL());
     }
 
     public function testOrderWithoutField(): void
@@ -82,7 +82,7 @@ final class OrderByWalkerTest extends AbstractOrmTestCase
         ;
 
         $expected = 'SELECT u0_.id AS id_0, u0_.username AS username_1 FROM users u0_';
-        $this->assertSame($expected, $query->getSQL());
+        static::assertSame($expected, $query->getSQL());
     }
 
     public function testOrderWithInvalidAliases(): void

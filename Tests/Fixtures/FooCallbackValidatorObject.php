@@ -23,8 +23,6 @@ class FooCallbackValidatorObject
     /**
      * Validates method in object instance.
      *
-     * @param ExecutionContextInterface $context
-     *
      * @return bool
      */
     public function validate(ExecutionContextInterface $context)
@@ -38,7 +36,6 @@ class FooCallbackValidatorObject
      * Validates static method in object instance.
      *
      * @param $object
-     * @param ExecutionContextInterface $context
      *
      * @return bool
      */

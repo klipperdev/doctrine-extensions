@@ -43,12 +43,12 @@ final class AbstractFilterSubscriberTest extends TestCase
         /** @var FilterCollection|MockObject $filterCollection */
         $filterCollection = $this->getMockBuilder(FilterCollection::class)->disableOriginalConstructor()->getMock();
 
-        $em->expects($this->once())
+        $em->expects(static::once())
             ->method('getFilters')
             ->willReturn($filterCollection)
         ;
 
-        $filterCollection->expects($this->once())
+        $filterCollection->expects(static::once())
             ->method('getEnabledFilters')
             ->willReturn([
                 'foo' => $filter,
@@ -58,17 +58,17 @@ final class AbstractFilterSubscriberTest extends TestCase
         /** @var AbstractFilterSubscriber|MockObject $listener */
         $listener = $this->getMockForAbstractClass(AbstractFilterSubscriber::class, [$em]);
 
-        $listener->expects($this->once())
+        $listener->expects(static::once())
             ->method('supports')
             ->willReturn(SQLFilter::class)
         ;
 
-        $listener->expects($this->once())
+        $listener->expects(static::once())
             ->method('injectParameters')
             ->with($filter)
         ;
 
-        $this->assertEquals([
+        static::assertEquals([
             KernelEvents::REQUEST => [
                 ['onEvent', 7],
             ],

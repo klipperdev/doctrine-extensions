@@ -48,18 +48,18 @@ final class UtilTest extends TestCase
     {
         /** @var ClassMetadata|MockObject $meta */
         $meta = $this->getMockBuilder(ClassMetadata::class)->getMock();
-        $meta->expects($this->any())
+        $meta->expects(static::any())
             ->method('getIdentifier')
             ->willReturn(['id'])
         ;
 
-        $meta->expects($this->any())
+        $meta->expects(static::any())
             ->method('getTypeOfField')
             ->with('id')
             ->willReturn($identifierType)
         ;
 
-        $this->assertSame($expected, Util::formatEmptyIdentifier($meta));
+        static::assertSame($expected, Util::formatEmptyIdentifier($meta));
     }
 
     /**
@@ -78,17 +78,17 @@ final class UtilTest extends TestCase
 
         /** @var ClassMetadata|MockObject $meta */
         $meta = $this->getMockBuilder(ClassMetadata::class)->getMock();
-        $meta->expects($this->any())
+        $meta->expects(static::any())
             ->method('getIdentifier')
             ->willReturn([$fieldName])
         ;
 
-        $meta->expects($this->any())
+        $meta->expects(static::any())
             ->method('getTypeOfField')
             ->with($fieldName)
             ->willReturn($identifierType)
         ;
 
-        $this->assertSame($expected, Util::getFormattedIdentifier($meta, $criteria, $fieldName, $value));
+        static::assertSame($expected, Util::getFormattedIdentifier($meta, $criteria, $fieldName, $value));
     }
 }

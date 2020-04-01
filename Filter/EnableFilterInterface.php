@@ -20,22 +20,16 @@ interface EnableFilterInterface
 {
     /**
      * Enable the filter.
-     *
-     * @return EnableFilterInterface
      */
     public function enable(): EnableFilterInterface;
 
     /**
      * Disable the filter.
-     *
-     * @return EnableFilterInterface
      */
     public function disable(): EnableFilterInterface;
 
     /**
      * Check if the filter is enabled.
-     *
-     * @return bool
      */
     public function isEnabled(): bool;
 }

@@ -73,8 +73,6 @@ abstract class AbstractFilterSubscriber implements EventSubscriberInterface
 
     /**
      * Get the supported filter.
-     *
-     * @return null|SQLFilter
      */
     protected function getFilter(): ?SQLFilter
     {
@@ -95,8 +93,6 @@ abstract class AbstractFilterSubscriber implements EventSubscriberInterface
 
     /**
      * Get the supported class.
-     *
-     * @return string
      */
     abstract protected function supports(): string;
 

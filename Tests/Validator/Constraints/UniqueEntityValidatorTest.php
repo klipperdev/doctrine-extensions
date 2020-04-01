@@ -130,24 +130,24 @@ final class UniqueEntityValidatorTest extends TestCase
 
         $entity1 = new SingleIntIdEntity(1, 'Foo');
         $violationsList = $validator->validate($entity1);
-        $this->assertEquals(0, $violationsList->count(), 'No violations found on entity before it is saved to the database.');
+        static::assertEquals(0, $violationsList->count(), 'No violations found on entity before it is saved to the database.');
 
         $em->persist($entity1);
         $em->flush();
 
         $violationsList = $validator->validate($entity1);
-        $this->assertEquals(0, $violationsList->count(), 'No violations found on entity after it was saved to the database.');
+        static::assertEquals(0, $violationsList->count(), 'No violations found on entity after it was saved to the database.');
 
         $entity2 = new SingleIntIdEntity(2, 'Foo');
 
         $violationsList = $validator->validate($entity2);
-        $this->assertEquals(1, $violationsList->count(), 'Violation found on entity with conflicting entity existing in the database.');
+        static::assertEquals(1, $violationsList->count(), 'Violation found on entity with conflicting entity existing in the database.');
 
         /** @var ConstraintViolationInterface $violation */
         $violation = $violationsList[0];
-        $this->assertEquals('This value is already used.', $violation->getMessage());
-        $this->assertEquals('name', $violation->getPropertyPath());
-        $this->assertEquals('Foo', $violation->getInvalidValue());
+        static::assertEquals('This value is already used.', $violation->getMessage());
+        static::assertEquals('name', $violation->getPropertyPath());
+        static::assertEquals('Foo', $violation->getInvalidValue());
     }
 
     public function testValidateCustomErrorPath(): void
@@ -165,13 +165,13 @@ final class UniqueEntityValidatorTest extends TestCase
         $entity2 = new SingleIntIdEntity(2, 'Foo');
 
         $violationsList = $validator->validate($entity2);
-        $this->assertEquals(1, $violationsList->count(), 'Violation found on entity with conflicting entity existing in the database.');
+        static::assertEquals(1, $violationsList->count(), 'Violation found on entity with conflicting entity existing in the database.');
 
         /** @var ConstraintViolationInterface $violation */
         $violation = $violationsList[0];
-        $this->assertEquals('This value is already used.', $violation->getMessage());
-        $this->assertEquals('bar', $violation->getPropertyPath());
-        $this->assertEquals('Foo', $violation->getInvalidValue());
+        static::assertEquals('This value is already used.', $violation->getMessage());
+        static::assertEquals('bar', $violation->getPropertyPath());
+        static::assertEquals('Foo', $violation->getInvalidValue());
     }
 
     public function testValidateUniquenessWithNull(): void
@@ -189,7 +189,7 @@ final class UniqueEntityValidatorTest extends TestCase
         $em->flush();
 
         $violationsList = $validator->validate($entity1);
-        $this->assertEquals(0, $violationsList->count(), 'No violations found on entity having a null value.');
+        static::assertEquals(0, $violationsList->count(), 'No violations found on entity having a null value.');
     }
 
     public function testValidateUniquenessWithIgnoreNull(): void
@@ -202,24 +202,24 @@ final class UniqueEntityValidatorTest extends TestCase
 
         $entity1 = new DoubleNameEntity(1, 'Foo', null);
         $violationsList = $validator->validate($entity1);
-        $this->assertEquals(0, $violationsList->count(), 'No violations found on entity before it is saved to the database.');
+        static::assertEquals(0, $violationsList->count(), 'No violations found on entity before it is saved to the database.');
 
         $em->persist($entity1);
         $em->flush();
 
         $violationsList = $validator->validate($entity1);
-        $this->assertEquals(0, $violationsList->count(), 'No violations found on entity after it was saved to the database.');
+        static::assertEquals(0, $violationsList->count(), 'No violations found on entity after it was saved to the database.');
 
         $entity2 = new DoubleNameEntity(2, 'Foo', null);
 
         $violationsList = $validator->validate($entity2);
-        $this->assertEquals(1, $violationsList->count(), 'Violation found on entity with conflicting entity existing in the database.');
+        static::assertEquals(1, $violationsList->count(), 'Violation found on entity with conflicting entity existing in the database.');
 
         /** @var ConstraintViolationInterface $violation */
         $violation = $violationsList[0];
-        $this->assertEquals('This value is already used.', $violation->getMessage());
-        $this->assertEquals('bar', $violation->getPropertyPath());
-        $this->assertEquals('Foo', $violation->getInvalidValue());
+        static::assertEquals('This value is already used.', $violation->getMessage());
+        static::assertEquals('bar', $violation->getPropertyPath());
+        static::assertEquals('Foo', $violation->getInvalidValue());
     }
 
     public function testValidateUniquenessAfterConsideringMultipleQueryResults(): void
@@ -237,19 +237,19 @@ final class UniqueEntityValidatorTest extends TestCase
         $em->flush();
 
         $violationsList = $validator->validate($entity1);
-        $this->assertEquals(1, $violationsList->count(), 'Violation found on entity with conflicting entity existing in the database.');
+        static::assertEquals(1, $violationsList->count(), 'Violation found on entity with conflicting entity existing in the database.');
 
         $violationsList = $validator->validate($entity2);
-        $this->assertEquals(1, $violationsList->count(), 'Violation found on entity with conflicting entity existing in the database.');
+        static::assertEquals(1, $violationsList->count(), 'Violation found on entity with conflicting entity existing in the database.');
     }
 
     public function testValidateUniquenessUsingCustomRepositoryMethod(): void
     {
         $entityManagerName = 'foo';
         $repository = $this->createRepositoryMock();
-        $repository->expects($this->once())
+        $repository->expects(static::once())
             ->method('findByCustom')
-            ->will($this->returnValue([]))
+            ->willReturn([])
         ;
         $em = $this->createEntityManagerMock($repository);
         $validator = $this->createValidator($entityManagerName, $em, null, [], null, 'findByCustom');
@@ -257,7 +257,7 @@ final class UniqueEntityValidatorTest extends TestCase
         $entity1 = new SingleIntIdEntity(1, 'foo');
 
         $violationsList = $validator->validate($entity1);
-        $this->assertEquals(0, $violationsList->count(), 'Violation is using custom repository method.');
+        static::assertEquals(0, $violationsList->count(), 'Violation is using custom repository method.');
     }
 
     public function testValidateUniquenessWithUnrewoundArray(): void
@@ -266,24 +266,24 @@ final class UniqueEntityValidatorTest extends TestCase
 
         $entityManagerName = 'foo';
         $repository = $this->createRepositoryMock();
-        $repository->expects($this->once())
+        $repository->expects(static::once())
             ->method('findByCustom')
-            ->will(
-                $this->returnCallback(function () use ($entity) {
+            ->willReturnCallback(
+                function () use ($entity) {
                     $returnValue = [
                         $entity,
                     ];
                     next($returnValue);
 
                     return $returnValue;
-                })
+                }
             )
         ;
         $em = $this->createEntityManagerMock($repository);
         $validator = $this->createValidator($entityManagerName, $em, null, [], null, 'findByCustom');
 
         $violationsList = $validator->validate($entity);
-        $this->assertCount(0, $violationsList, 'Violation is using unrewound array as return value in the repository method.');
+        static::assertCount(0, $violationsList, 'Violation is using unrewound array as return value in the repository method.');
     }
 
     public function testAssociatedEntity(): void
@@ -302,7 +302,7 @@ final class UniqueEntityValidatorTest extends TestCase
         $em->flush();
 
         $violationsList = $validator->validate($associated);
-        $this->assertEquals(0, $violationsList->count());
+        static::assertEquals(0, $violationsList->count());
 
         $associated2 = new AssociationEntity();
         $associated2->single = $entity1;
@@ -311,7 +311,7 @@ final class UniqueEntityValidatorTest extends TestCase
         $em->flush();
 
         $violationsList = $validator->validate($associated2);
-        $this->assertEquals(1, $violationsList->count());
+        static::assertEquals(1, $violationsList->count());
     }
 
     public function testAssociatedEntityWithNull(): void
@@ -328,7 +328,7 @@ final class UniqueEntityValidatorTest extends TestCase
         $em->flush();
 
         $violationsList = $validator->validate($associated);
-        $this->assertEquals(0, $violationsList->count());
+        static::assertEquals(0, $violationsList->count());
     }
 
     public function testAssociatedCompositeEntity(): void
@@ -385,7 +385,7 @@ final class UniqueEntityValidatorTest extends TestCase
         /** @var ManagerRegistry|MockObject $registry */
         $registry = $this->getMockBuilder(ManagerRegistry::class)->getMock();
 
-        $registry->expects($this->once())
+        $registry->expects(static::once())
             ->method('getManagers')
             ->willReturn([])
         ;
@@ -415,12 +415,12 @@ final class UniqueEntityValidatorTest extends TestCase
         $validator = $this->createValidator($entityManagerName, $em);
         $entity1 = new SingleIntIdEntity(1, 'Foo');
 
-        $this->assertCount(3, $em->getFilters()->getEnabledFilters());
+        static::assertCount(3, $em->getFilters()->getEnabledFilters());
 
         $violationsList = $validator->validate($entity1);
 
-        $this->assertEquals(0, $violationsList->count());
-        $this->assertCount(3, $em->getFilters()->getEnabledFilters());
+        static::assertEquals(0, $violationsList->count());
+        static::assertCount(3, $em->getFilters()->getEnabledFilters());
     }
 
     public function testDisableOneFilterAndReactivateAfter(): void
@@ -437,21 +437,21 @@ final class UniqueEntityValidatorTest extends TestCase
         $validator = $this->createValidator($entityManagerName, $em, null, null, null, 'findBy', true, ['fooFilter1'], false);
         $entity1 = new SingleIntIdEntity(1, 'Foo');
 
-        $this->assertCount(3, $em->getFilters()->getEnabledFilters());
+        static::assertCount(3, $em->getFilters()->getEnabledFilters());
 
         $violationsList = $validator->validate($entity1);
 
-        $this->assertEquals(0, $violationsList->count());
-        $this->assertCount(3, $em->getFilters()->getEnabledFilters());
+        static::assertEquals(0, $violationsList->count());
+        static::assertCount(3, $em->getFilters()->getEnabledFilters());
     }
 
     protected function createRegistryMock($entityManagerName, $em)
     {
         $registry = $this->getMockBuilder(ManagerRegistry::class)->getMock();
-        $registry->expects($this->any())
+        $registry->expects(static::any())
             ->method('getManager')
-            ->with($this->equalTo($entityManagerName))
-            ->will($this->returnValue($em))
+            ->with(static::equalTo($entityManagerName))
+            ->willReturn($em)
         ;
 
         return $registry;
@@ -470,16 +470,16 @@ final class UniqueEntityValidatorTest extends TestCase
         $em = $this->getMockBuilder(ObjectManager::class)
             ->getMock()
         ;
-        $em->expects($this->any())
+        $em->expects(static::any())
             ->method('getRepository')
-            ->will($this->returnValue($repositoryMock))
+            ->willReturn($repositoryMock)
         ;
 
         $classMetadata = $this->getMockBuilder(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class)->getMock();
         $classMetadata
-            ->expects($this->any())
+            ->expects(static::any())
             ->method('hasField')
-            ->will($this->returnValue(true))
+            ->willReturn(true)
         ;
         $refl = $this->getMockBuilder(StaticReflectionProperty::class)
             ->disableOriginalConstructor()
@@ -487,15 +487,15 @@ final class UniqueEntityValidatorTest extends TestCase
             ->getMock()
         ;
         $refl
-            ->expects($this->any())
+            ->expects(static::any())
             ->method('getValue')
-            ->will($this->returnValue(true))
+            ->willReturn(true)
         ;
         /* @var \Doctrine\ORM\Mapping\ClassMetadata $classMetadata */
         $classMetadata->reflFields = ['name' => $refl];
-        $em->expects($this->any())
+        $em->expects(static::any())
             ->method('getClassMetadata')
-            ->will($this->returnValue($classMetadata))
+            ->willReturn($classMetadata)
         ;
 
         return $em;
@@ -504,10 +504,10 @@ final class UniqueEntityValidatorTest extends TestCase
     protected function createValidatorFactory($uniqueValidator)
     {
         $validatorFactory = $this->getMockBuilder(ConstraintValidatorFactoryInterface::class)->getMock();
-        $validatorFactory->expects($this->any())
+        $validatorFactory->expects(static::any())
             ->method('getInstance')
-            ->with($this->isInstanceOf(UniqueEntity::class))
-            ->will($this->returnValue($uniqueValidator))
+            ->with(static::isInstanceOf(UniqueEntity::class))
+            ->willReturn($uniqueValidator)
         ;
 
         return $validatorFactory;

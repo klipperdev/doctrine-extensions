@@ -35,8 +35,6 @@ class UniqueEntityValidator extends ConstraintValidator
 
     /**
      * Constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -46,8 +44,7 @@ class UniqueEntityValidator extends ConstraintValidator
     /**
      * Validate.
      *
-     * @param object     $entity
-     * @param Constraint $constraint
+     * @param object $entity
      *
      * @throws UnexpectedTypeException
      * @throws ConstraintDefinitionException
@@ -80,9 +77,7 @@ class UniqueEntityValidator extends ConstraintValidator
     /**
      * Gets criteria.
      *
-     * @param object        $entity
-     * @param Constraint    $constraint
-     * @param ObjectManager $em
+     * @param object $entity
      *
      * @throws ConstraintDefinitionException
      *
@@ -110,12 +105,7 @@ class UniqueEntityValidator extends ConstraintValidator
     /**
      * Get entity result.
      *
-     * @param object        $entity
-     * @param Constraint    $constraint
-     * @param array         $criteria
-     * @param ObjectManager $em
-     *
-     * @return array
+     * @param object $entity
      */
     private function getResult($entity, Constraint $constraint, array $criteria, ObjectManager $em): array
     {
@@ -143,8 +133,6 @@ class UniqueEntityValidator extends ConstraintValidator
      *
      * @param array|\Iterator $result
      * @param object          $entity
-     *
-     * @return bool
      */
     private function isValidResult($result, $entity): bool
     {
@@ -154,12 +142,7 @@ class UniqueEntityValidator extends ConstraintValidator
     }
 
     /**
-     * @param array         $criteria
-     * @param Constraint    $constraint
-     * @param ObjectManager $em
-     * @param ClassMetadata $class
-     * @param object        $entity
-     * @param string        $fieldName
+     * @param object $entity
      *
      * @throws ConstraintDefinitionException
      *
@@ -183,9 +166,6 @@ class UniqueEntityValidator extends ConstraintValidator
     }
 
     /**
-     * @param ClassMetadata $class
-     * @param string        $fieldName
-     *
      * @throws ConstraintDefinitionException
      */
     private function validateFieldCriteria(ClassMetadata $class, string $fieldName): void
@@ -197,11 +177,6 @@ class UniqueEntityValidator extends ConstraintValidator
 
     /**
      * Finds the criteria for the entity field.
-     *
-     * @param array         $criteria
-     * @param ObjectManager $em
-     * @param ClassMetadata $class
-     * @param string        $fieldName
      *
      * @throws ConstraintDefinitionException
      */

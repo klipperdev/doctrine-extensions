@@ -81,12 +81,21 @@ class SqlFilterUtil
     /**
      * Disable the SQL Filters.
      *
-     * @param null|ObjectManager $om      The object manager instance
-     * @param string[]           $filters The list of SQL Filter
+     * @param null|ObjectManager $om          The object manager instance
+     * @param string[]           $filters     The list of SQL Filter
+     * @param bool               $findFilters Check if the filters must be found before
+     *
+     * @return string[] The disabled filters
      */
-    public static function disableFilters(?ObjectManager $om, array $filters): void
+    public static function disableFilters(?ObjectManager $om, array $filters, bool $findFilters = false): array
     {
+        if ($findFilters) {
+            $filters = static::findFilters($om, [], empty($filters));
+        }
+
         static::actionFilters($om, 'disable', $filters);
+
+        return $filters;
     }
 
     /**

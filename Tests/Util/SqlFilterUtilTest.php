@@ -43,7 +43,7 @@ final class SqlFilterUtilTest extends TestCase
         $this->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $this->filterCollection = $this->getMockBuilder(FilterCollection::class)->disableOriginalConstructor()->getMock();
 
-        $this->em->expects(static::once())
+        $this->em->expects(static::atLeastOnce())
             ->method('getFilters')
             ->willReturn($this->filterCollection)
         ;
@@ -115,5 +115,24 @@ final class SqlFilterUtilTest extends TestCase
         ;
 
         static::assertTrue(SqlFilterUtil::isEnabled($this->em, 'bar'));
+    }
+
+    public function testFindAndDisableSqlFilter(): void
+    {
+        $barFilter = new BarFilter($this->em);
+
+        $this->filterCollection->expects(static::once())
+            ->method('isEnabled')
+            ->with('bar')
+            ->willReturn(true)
+        ;
+
+        $this->filterCollection->expects(static::once())
+            ->method('getEnabledFilters')
+            ->willReturn(['bar' => $barFilter])
+        ;
+
+        $disabledFilters = SqlFilterUtil::disableFilters($this->em, [], true);
+        static::assertEquals(['bar'], $disabledFilters);
     }
 }

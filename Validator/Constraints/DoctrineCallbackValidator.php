@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\DoctrineExtensions\Validator\Constraints;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Klipper\Component\DoctrineExtensions\Exception\ConstraintDefinitionException;
 use Klipper\Component\DoctrineExtensions\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;

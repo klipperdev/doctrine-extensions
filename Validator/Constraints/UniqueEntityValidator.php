@@ -11,9 +11,9 @@
 
 namespace Klipper\Component\DoctrineExtensions\Validator\Constraints;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Klipper\Component\DoctrineExtensions\Exception\ConstraintDefinitionException;
 use Klipper\Component\DoctrineExtensions\Exception\UnexpectedTypeException;
 use Klipper\Component\DoctrineExtensions\Util\SqlFilterUtil;

@@ -11,12 +11,12 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests\Validator\Constraints;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\Common\Reflection\StaticReflectionProperty;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\Persistence\ManagerRegistry;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\AssociationEntity;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\BarFilter;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\CompositeIntIdEntity;

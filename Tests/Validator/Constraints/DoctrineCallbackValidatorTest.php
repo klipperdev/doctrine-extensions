@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests\Validator\Constraints;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\FooCallbackValidatorClass;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\FooCallbackValidatorObject;
 use Klipper\Component\DoctrineExtensions\Validator\Constraints\DoctrineCallback;

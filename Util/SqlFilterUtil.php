@@ -11,9 +11,9 @@
 
 namespace Klipper\Component\DoctrineExtensions\Util;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Filter\SQLFilter;
+use Doctrine\Persistence\ObjectManager;
 use Klipper\Component\DoctrineExtensions\Filter\EnableFilterInterface;
 
 /**

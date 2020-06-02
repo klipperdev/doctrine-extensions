@@ -14,9 +14,9 @@ namespace Klipper\Component\DoctrineExtensions\Filter\Listener;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Filter\SQLFilter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Base of Symfony listener for Doctrine Filter with parameter injection.
@@ -60,9 +60,9 @@ abstract class AbstractFilterSubscriber implements EventSubscriberInterface
     /**
      * Action on the event.
      *
-     * @param KernelEvent $event The event
+     * @param Event $event The event
      */
-    public function onEvent(KernelEvent $event): void
+    public function onEvent(Event $event): void
     {
         if (!$event instanceof RequestEvent || !$this->injected) {
             if (null !== ($filter = $this->getFilter())) {

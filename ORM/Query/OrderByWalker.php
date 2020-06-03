@@ -11,12 +11,12 @@
 
 namespace Klipper\Component\DoctrineExtensions\ORM\Query;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\AST\OrderByClause;
 use Doctrine\ORM\Query\AST\OrderByItem;
 use Doctrine\ORM\Query\AST\PathExpression;
 use Doctrine\ORM\Query\AST\SelectStatement;
 use Doctrine\ORM\Query\TreeWalkerAdapter;
+use Doctrine\Persistence\Mapping\ClassMetadata;
 
 /**
  * OrderBy Query TreeWalker for Sortable functionality

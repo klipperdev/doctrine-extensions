@@ -11,12 +11,12 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests\Validator\Constraints;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\Common\Reflection\StaticReflectionProperty;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectRepository;
 use Klipper\Component\DoctrineExtensions\Exception\ConstraintDefinitionException;
 use Klipper\Component\DoctrineExtensions\Exception\UnexpectedTypeException;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\AssociationEntity;
@@ -477,7 +477,7 @@ final class UniqueEntityValidatorTest extends TestCase
             ->willReturn($repositoryMock)
         ;
 
-        $classMetadata = $this->getMockBuilder(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class)->getMock();
+        $classMetadata = $this->getMockBuilder(\Doctrine\Persistence\Mapping\ClassMetadata::class)->getMock();
         $classMetadata
             ->expects(static::any())
             ->method('hasField')

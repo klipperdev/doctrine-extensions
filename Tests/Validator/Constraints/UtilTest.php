@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests\Validator\Constraints;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\ClassMetadata;
 use Klipper\Component\DoctrineExtensions\Validator\Constraints\Util;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

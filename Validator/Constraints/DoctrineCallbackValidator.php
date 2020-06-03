@@ -24,11 +24,8 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class DoctrineCallbackValidator extends ConstraintValidator
 {
-    protected $registry;
+    protected ManagerRegistry $registry;
 
-    /**
-     * Constructor.
-     */
     public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;

@@ -11,6 +11,7 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests\Validator\Constraints;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\FooCallbackValidatorClass;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\FooCallbackValidatorObject;
@@ -31,15 +32,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 final class DoctrineCallbackValidatorTest extends TestCase
 {
-    /**
-     * @var MockObject
-     */
-    protected $context;
+    protected ?MockObject $context = null;
 
-    /**
-     * @var DoctrineCallbackValidator
-     */
-    protected $validator;
+    protected ?DoctrineCallbackValidator $validator = null;
 
     protected function setUp(): void
     {
@@ -277,7 +272,7 @@ final class DoctrineCallbackValidatorTest extends TestCase
         static::assertEquals(new DoctrineCallback([FooCallbackValidatorClass::class, 'validateCallback']), $constraint);
     }
 
-    protected function createRegistryMock($entityManagerName, $em)
+    protected function createRegistryMock(string $entityManagerName, EntityManagerInterface $em)
     {
         $registry = $this->getMockBuilder(ManagerRegistry::class)->getMock();
         $registry->expects(static::any())

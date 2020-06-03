@@ -23,6 +23,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity as BaseUniqueEnti
 class UniqueEntity extends BaseUniqueEntity
 {
     public $service = 'klipper.doctrine_extensions.orm.validator.unique';
-    public $filters = [];
-    public $allFilters = true;
+    public array $filters = [];
+    public bool $allFilters = true;
 }

@@ -11,8 +11,12 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests\Mocks;
 
+use Doctrine\Common\EventManager;
+use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver;
 use Doctrine\DBAL\Driver\Statement;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 /**
  * Mock class for Connection.
@@ -26,61 +30,32 @@ class ConnectionMock extends Connection
      */
     private $_fetchOneResult;
 
-    /**
-     * @var null|\Exception
-     */
-    private $_fetchOneException;
+    private ?\Throwable $_fetchOneException = null;
 
-    /**
-     * @var null|Statement
-     */
-    private $_queryResult;
+    private ?Statement $_queryResult = null;
 
-    /**
-     * @var DatabasePlatformMock
-     */
-    private $_platformMock;
+    private AbstractPlatform $_platformMock;
 
-    /**
-     * @var int
-     */
-    private $_lastInsertId = 0;
+    private int $_lastInsertId = 0;
 
-    /**
-     * @var array
-     */
-    private $_inserts = [];
+    private array $_inserts = [];
 
-    /**
-     * @var array
-     */
-    private $_executeUpdates = [];
+    private array $_executeUpdates = [];
 
-    /**
-     * @param \Doctrine\DBAL\Driver              $driver
-     * @param null|\Doctrine\DBAL\Configuration  $config
-     * @param null|\Doctrine\Common\EventManager $eventManager
-     */
-    public function __construct(array $params, $driver, $config = null, $eventManager = null)
+    public function __construct(array $params, Driver $driver, ?Configuration $config = null, ?EventManager $eventManager = null)
     {
         $this->_platformMock = new DatabasePlatformMock();
 
         parent::__construct($params, $driver, $config, $eventManager);
-
-        // Override possible assignment of platform to database platform mock
-        $this->_platform = $this->_platformMock;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDatabasePlatform()
     {
         return $this->_platformMock;
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $tableName
      */
     public function insert($tableName, array $data, array $types = []): void
     {
@@ -88,7 +63,7 @@ class ConnectionMock extends Connection
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $query
      */
     public function executeUpdate($query, array $params = [], array $types = []): void
     {
@@ -96,7 +71,7 @@ class ConnectionMock extends Connection
     }
 
     /**
-     * {@inheritdoc}
+     * @param null|mixed $seqName
      */
     public function lastInsertId($seqName = null)
     {
@@ -104,7 +79,8 @@ class ConnectionMock extends Connection
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $statement
+     * @param mixed $colnum
      */
     public function fetchColumn($statement, array $params = [], $colnum = 0, array $types = [])
     {
@@ -115,16 +91,14 @@ class ConnectionMock extends Connection
         return $this->_fetchOneResult;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function query(): Statement
     {
         return $this->_queryResult;
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed      $input
+     * @param null|mixed $type
      */
     public function quote($input, $type = null)
     {
@@ -145,15 +119,12 @@ class ConnectionMock extends Connection
         $this->_fetchOneResult = $fetchOneResult;
     }
 
-    public function setFetchOneException(\Exception $exception = null): void
+    public function setFetchOneException(\Throwable $exception = null): void
     {
         $this->_fetchOneException = $exception;
     }
 
-    /**
-     * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
-     */
-    public function setDatabasePlatform($platform): void
+    public function setDatabasePlatform(AbstractPlatform $platform): void
     {
         $this->_platformMock = $platform;
     }

@@ -21,9 +21,6 @@ use Klipper\Component\DoctrineExtensions\Filter\AbstractFilter;
  */
 class BarFilter extends AbstractFilter
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function doAddFilterConstraint(ClassMetadata $targetEntity, string $targetTableAlias): string
     {
         $filter = '';
@@ -34,7 +31,7 @@ class BarFilter extends AbstractFilter
                 $col = $this->getClassMetadata($targetEntity->getName())->getColumnName('foo');
                 $filter .= $targetTableAlias.'.'.$col.' = '.$connection->quote('bar');
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // nothing do
         }
 

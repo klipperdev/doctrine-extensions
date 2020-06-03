@@ -27,7 +27,7 @@ class DoctrineCallback extends Constraint
     public $callback;
 
     /**
-     * {@inheritdoc}
+     * @param null|mixed $options
      */
     public function __construct($options = null)
     {
@@ -39,18 +39,12 @@ class DoctrineCallback extends Constraint
         parent::__construct($options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultOption(): ?string
     {
         return 'callback';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getTargets()
+    public function getTargets(): array
     {
         return [self::CLASS_CONSTRAINT, self::PROPERTY_CONSTRAINT];
     }

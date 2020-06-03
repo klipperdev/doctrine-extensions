@@ -34,16 +34,14 @@ class DriverMock implements Driver
     private $_schemaManagerMock;
 
     /**
-     * {@inheritdoc}
+     * @param null|mixed $username
+     * @param null|mixed $password
      */
     public function connect(array $params, $username = null, $password = null, array $driverOptions = [])
     {
         return new DriverConnectionMock();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDatabasePlatform()
     {
         if (!$this->_platformMock) {
@@ -53,9 +51,6 @@ class DriverMock implements Driver
         return $this->_platformMock;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSchemaManager(Connection $conn)
     {
         if (null === $this->_schemaManagerMock) {
@@ -75,22 +70,16 @@ class DriverMock implements Driver
         $this->_schemaManagerMock = $sm;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'mock';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDatabase(Connection $conn): void
     {
     }
 
-    public function convertExceptionCode(\Exception $exception)
+    public function convertExceptionCode(\Throwable $exception)
     {
         return 0;
     }

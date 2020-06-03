@@ -41,9 +41,6 @@ class OrderByWalker extends TreeWalkerAdapter
      */
     public const HINT_SORT_DIRECTION = 'klipper_paginator.sort.direction';
 
-    /**
-     * {@inheritdoc}
-     */
     public function walkSelectStatement(SelectStatement $AST): void
     {
         $query = $this->_getQuery();

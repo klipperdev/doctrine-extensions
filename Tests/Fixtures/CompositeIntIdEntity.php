@@ -25,18 +25,18 @@ use Doctrine\ORM\Mapping\Id;
 class CompositeIntIdEntity
 {
     /** @Column(type="string") */
-    public $name;
+    public string $name;
     /**
      * @Id
      * @Column(type="integer")
      */
-    protected $id1;
+    protected int $id1;
 
     /**
      * @Id
      * @Column(type="integer")
      */
-    protected $id2;
+    protected int $id2;
 
     public function __construct(int $id1, int $id2, string $name)
     {

@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Mapping\MetadataInterface;
  */
 class FakeMetadataFactory implements MetadataFactoryInterface
 {
-    protected $metadatas = [];
+    protected array $metadatas = [];
 
     public function getMetadataFor($class): MetadataInterface
     {

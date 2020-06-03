@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class UtilTest extends TestCase
 {
-    public function getIdentifierTypes()
+    public function getIdentifierTypes(): array
     {
         return [
             ['bigint', 0],
@@ -41,10 +41,9 @@ final class UtilTest extends TestCase
     /**
      * @dataProvider getIdentifierTypes
      *
-     * @param string     $identifierType
      * @param int|string $expected
      */
-    public function testFormatEmptyIdentifier($identifierType, $expected): void
+    public function testFormatEmptyIdentifier(string $identifierType, $expected): void
     {
         /** @var ClassMetadata|MockObject $meta */
         $meta = $this->getMockBuilder(ClassMetadata::class)->getMock();
@@ -65,10 +64,9 @@ final class UtilTest extends TestCase
     /**
      * @dataProvider getIdentifierTypes
      *
-     * @param string     $identifierType
      * @param int|string $expected
      */
-    public function testGetFormattedIdentifier($identifierType, $expected): void
+    public function testGetFormattedIdentifier(string $identifierType, $expected): void
     {
         $fieldName = 'single';
         $value = null;

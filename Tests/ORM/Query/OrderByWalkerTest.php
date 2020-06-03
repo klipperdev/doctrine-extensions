@@ -25,10 +25,7 @@ use Klipper\Component\DoctrineExtensions\Tests\AbstractOrmTestCase;
  */
 final class OrderByWalkerTest extends AbstractOrmTestCase
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private ?EntityManagerInterface $em = null;
 
     protected function setUp(): void
     {

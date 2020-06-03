@@ -11,9 +11,9 @@
 
 namespace Klipper\Component\DoctrineExtensions\Validator\Constraints;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\ObjectManager;
 use Klipper\Component\DoctrineExtensions\Exception\ConstraintDefinitionException;
 use Klipper\Component\DoctrineExtensions\Exception\UnexpectedTypeException;
 use Klipper\Component\DoctrineExtensions\Util\SqlFilterUtil;
@@ -28,14 +28,8 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class UniqueEntityValidator extends ConstraintValidator
 {
-    /**
-     * @var ManagerRegistry
-     */
-    private $registry;
+    private ManagerRegistry $registry;
 
-    /**
-     * Constructor.
-     */
     public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
@@ -104,10 +98,8 @@ class UniqueEntityValidator extends ConstraintValidator
 
     /**
      * Get entity result.
-     *
-     * @param object $entity
      */
-    private function getResult($entity, Constraint $constraint, array $criteria, ObjectManager $em): array
+    private function getResult(object $entity, Constraint $constraint, array $criteria, ObjectManager $em): array
     {
         /** @var UniqueEntity $constraint */
         $filters = SqlFilterUtil::findFilters($em, (array) $constraint->filters, $constraint->allFilters);
@@ -132,9 +124,8 @@ class UniqueEntityValidator extends ConstraintValidator
      * unique.
      *
      * @param array|\Iterator $result
-     * @param object          $entity
      */
-    private function isValidResult($result, $entity): bool
+    private function isValidResult(iterable $result, object $entity): bool
     {
         return 0 === \count($result)
             || (1 === \count($result)
@@ -142,13 +133,11 @@ class UniqueEntityValidator extends ConstraintValidator
     }
 
     /**
-     * @param object $entity
-     *
      * @throws ConstraintDefinitionException
      *
      * @return null|array The new criteria
      */
-    private function findFieldCriteria(array $criteria, Constraint $constraint, ObjectManager $em, ClassMetadata $class, $entity, string $fieldName): ?array
+    private function findFieldCriteria(array $criteria, Constraint $constraint, ObjectManager $em, ClassMetadata $class, object $entity, string $fieldName): ?array
     {
         $this->validateFieldCriteria($class, $fieldName);
 

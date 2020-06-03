@@ -35,11 +35,9 @@ class FooCallbackValidatorObject
     /**
      * Validates static method in object instance.
      *
-     * @param $object
-     *
-     * @return bool
+     * @param mixed $object
      */
-    public static function validateStatic($object, ExecutionContextInterface $context)
+    public static function validateStatic($object, ExecutionContextInterface $context): bool
     {
         $context->addViolation('Static message', ['{{ value }}' => 'baz']);
 

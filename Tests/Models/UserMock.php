@@ -30,19 +30,19 @@ class UserMock
      * @Column(type="integer")
      * @GeneratedValue
      */
-    public $id;
+    public ?int $id = null;
 
     /**
      * @Column(type="string", length=255, unique=true)
      */
-    public $username;
+    public ?string $username = null;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername()
+    public function getUsername(): ?string
     {
         return $this->username;
     }

@@ -27,17 +27,17 @@ class DoubleNameEntity
     /**
      * @Column(type="string")
      */
-    public $name;
+    public string $name;
 
     /**
      * @Column(type="string", nullable=true)
      */
-    public $name2;
+    public ?string $name2;
     /**
      * @Id
      * @Column(type="integer")
      */
-    protected $id;
+    protected int $id;
 
     public function __construct(int $id, string $name, ?string $name2)
     {

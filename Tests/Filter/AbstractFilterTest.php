@@ -44,7 +44,7 @@ final class AbstractFilterTest extends TestCase
      * @param null|bool $value    The value of foo_boolean parameter
      * @param string    $expected The expected result
      */
-    public function testGetRealParameter($value, $expected): void
+    public function testGetRealParameter(?bool $value, string $expected): void
     {
         /** @var EntityManagerInterface|MockObject $em */
         $em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();

@@ -24,10 +24,8 @@ class AssociationEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="SingleIntIdEntity")
-     *
-     * @var SingleIntIdEntity
      */
-    public $single;
+    public ?SingleIntIdEntity $single = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="CompositeIntIdEntity")
@@ -35,14 +33,12 @@ class AssociationEntity
      *     @ORM\JoinColumn(name="composite_id1", referencedColumnName="id1"),
      *     @ORM\JoinColumn(name="composite_id2", referencedColumnName="id2")
      * })
-     *
-     * @var CompositeIntIdEntity
      */
-    public $composite;
+    public ?CompositeIntIdEntity $composite = null;
+
     /**
-     * @var int
      * @ORM\Id @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 }

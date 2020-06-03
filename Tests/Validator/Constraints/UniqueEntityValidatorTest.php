@@ -17,6 +17,8 @@ use Doctrine\Common\Reflection\StaticReflectionProperty;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\Persistence\ManagerRegistry;
+use Klipper\Component\DoctrineExtensions\Exception\ConstraintDefinitionException;
+use Klipper\Component\DoctrineExtensions\Exception\UnexpectedTypeException;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\AssociationEntity;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\BarFilter;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\CompositeIntIdEntity;
@@ -48,7 +50,7 @@ final class UniqueEntityValidatorTest extends TestCase
 {
     public function testConstraintIsNotUniqueEntity(): void
     {
-        $this->expectException(\Klipper\Component\DoctrineExtensions\Exception\UnexpectedTypeException::class);
+        $this->expectException(UnexpectedTypeException::class);
 
         /** @var ManagerRegistry $registry */
         /** @var Constraint $constraint */
@@ -64,7 +66,7 @@ final class UniqueEntityValidatorTest extends TestCase
 
     public function testConstraintWrongFieldType(): void
     {
-        $this->expectException(\Klipper\Component\DoctrineExtensions\Exception\UnexpectedTypeException::class);
+        $this->expectException(UnexpectedTypeException::class);
 
         /** @var ManagerRegistry $registry */
         $entityManagerName = 'foo';
@@ -79,7 +81,7 @@ final class UniqueEntityValidatorTest extends TestCase
 
     public function testConstraintWrongErrorPath(): void
     {
-        $this->expectException(\Klipper\Component\DoctrineExtensions\Exception\UnexpectedTypeException::class);
+        $this->expectException(UnexpectedTypeException::class);
 
         /** @var ManagerRegistry $registry */
         $entityManagerName = 'foo';
@@ -94,7 +96,7 @@ final class UniqueEntityValidatorTest extends TestCase
 
     public function testConstraintHasNotField(): void
     {
-        $this->expectException(\Klipper\Component\DoctrineExtensions\Exception\ConstraintDefinitionException::class);
+        $this->expectException(ConstraintDefinitionException::class);
 
         /** @var ManagerRegistry $registry */
         $entityManagerName = 'foo';
@@ -110,7 +112,7 @@ final class UniqueEntityValidatorTest extends TestCase
 
     public function testConstraintHasNotExistingField(): void
     {
-        $this->expectException(\Klipper\Component\DoctrineExtensions\Exception\ConstraintDefinitionException::class);
+        $this->expectException(ConstraintDefinitionException::class);
 
         $entityManagerName = 'foo';
         $em = DoctrineTestHelper::createTestEntityManager();
@@ -445,7 +447,7 @@ final class UniqueEntityValidatorTest extends TestCase
         static::assertCount(3, $em->getFilters()->getEnabledFilters());
     }
 
-    protected function createRegistryMock($entityManagerName, $em)
+    protected function createRegistryMock(string $entityManagerName, ObjectManager $em)
     {
         $registry = $this->getMockBuilder(ManagerRegistry::class)->getMock();
         $registry->expects(static::any())
@@ -465,7 +467,7 @@ final class UniqueEntityValidatorTest extends TestCase
         ;
     }
 
-    protected function createEntityManagerMock($repositoryMock)
+    protected function createEntityManagerMock($repositoryMock): ObjectManager
     {
         $em = $this->getMockBuilder(ObjectManager::class)
             ->getMock()
@@ -513,7 +515,7 @@ final class UniqueEntityValidatorTest extends TestCase
         return $validatorFactory;
     }
 
-    protected function createValidator($entityManagerName, $em, $validateClass = null, $uniqueFields = null, $errorPath = null, $repositoryMethod = 'findBy', $ignoreNull = true, array $filters = [], $all = true)
+    protected function createValidator(string $entityManagerName, ObjectManager $em, ?string $validateClass = null, $uniqueFields = null, $errorPath = null, $repositoryMethod = 'findBy', $ignoreNull = true, array $filters = [], $all = true)
     {
         if (!$validateClass) {
             $validateClass = SingleIntIdEntity::class;
@@ -548,9 +550,8 @@ final class UniqueEntityValidatorTest extends TestCase
         return new RecursiveValidator($contextFactory, $metadataFactory, $validatorFactory, []);
     }
 
-    protected function createSchema($em): void
+    protected function createSchema(EntityManagerInterface $em): void
     {
-        /** @var EntityManagerInterface $em */
         $schemaTool = new SchemaTool($em);
         $schemaTool->createSchema([
             $em->getClassMetadata(SingleIntIdEntity::class),

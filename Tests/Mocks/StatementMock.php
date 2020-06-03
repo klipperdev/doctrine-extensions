@@ -21,92 +21,85 @@ use Doctrine\DBAL\Driver\Statement;
 class StatementMock implements \IteratorAggregate, Statement
 {
     /**
-     * {@inheritdoc}
+     * @param mixed      $param
+     * @param mixed      $value
+     * @param null|mixed $type
      */
     public function bindValue($param, $value, $type = null): void
     {
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed      $column
+     * @param mixed      $variable
+     * @param null|mixed $type
+     * @param null|mixed $length
      */
     public function bindParam($column, &$variable, $type = null, $length = null): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function errorCode(): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function errorInfo(): void
     {
     }
 
     /**
-     * {@inheritdoc}
+     * @param null|mixed $params
      */
     public function execute($params = null): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rowCount(): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function closeCursor(): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function columnCount(): void
     {
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed      $fetchStyle
+     * @param null|mixed $arg2
+     * @param null|mixed $arg3
      */
     public function setFetchMode($fetchStyle, $arg2 = null, $arg3 = null): void
     {
     }
 
     /**
-     * {@inheritdoc}
+     * @param null|mixed $fetchMode
+     * @param mixed      $cursorOrientation
+     * @param mixed      $cursorOffset
      */
     public function fetch($fetchMode = null, $cursorOrientation = \PDO::FETCH_ORI_NEXT, $cursorOffset = 0): void
     {
     }
 
     /**
-     * {@inheritdoc}
+     * @param null|mixed $fetchMode
+     * @param null|mixed $fetchArgument
+     * @param null|mixed $ctorArgs
      */
     public function fetchAll($fetchMode = null, $fetchArgument = null, $ctorArgs = null): void
     {
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $columnIndex
      */
     public function fetchColumn($columnIndex = 0): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIterator(): void
     {
     }

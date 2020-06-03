@@ -11,14 +11,16 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests;
 
-use Doctrine\Common\Annotations;
 use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\EventManager;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\Cache\CacheConfiguration;
+use Doctrine\ORM\Cache\CacheFactory;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Configuration;
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Doctrine\ORM\Version;
+use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,56 +32,20 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractOrmTestCase extends TestCase
 {
-    /**
-     * @var bool
-     */
-    protected $isSecondLevelCacheEnabled = false;
+    protected bool $isSecondLevelCacheEnabled = false;
 
-    /**
-     * @var \Doctrine\ORM\Cache\CacheFactory
-     */
-    protected $secondLevelCacheFactory;
+    protected ?CacheFactory $secondLevelCacheFactory = null;
 
-    /**
-     * @var null|\Doctrine\Common\Cache\Cache
-     */
-    protected $secondLevelCacheDriverImpl;
+    protected ?Cache $secondLevelCacheDriverImpl;
     /**
      * The metadata cache that is shared between all ORM tests (except functional tests).
-     *
-     * @var null|\Doctrine\Common\Cache\Cache
      */
-    private static $_metadataCacheImpl = null;
+    private static ?Cache $_metadataCacheImpl = null;
 
     /**
      * The query cache that is shared between all ORM tests (except functional tests).
-     *
-     * @var null|\Doctrine\Common\Cache\Cache
      */
-    private static $_queryCacheImpl = null;
-
-    /**
-     * @param array $paths
-     *
-     * @return \Doctrine\ORM\Mapping\Driver\AnnotationDriver
-     */
-    protected function createAnnotationDriver($paths = [])
-    {
-        if (version_compare(Version::VERSION, '3.0.0', '>=')) {
-            $reader = new Annotations\CachedReader(new Annotations\AnnotationReader(), new ArrayCache());
-        } else {
-            // Register the ORM Annotations in the AnnotationRegistry
-            $reader = new Annotations\SimpleAnnotationReader();
-
-            $reader->addNamespace('Doctrine\ORM\Mapping');
-
-            $reader = new Annotations\CachedReader($reader, new ArrayCache());
-        }
-
-        Annotations\AnnotationRegistry::registerFile(__DIR__.'/../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
-
-        return new AnnotationDriver($reader, (array) $paths);
-    }
+    private static ?Cache $_queryCacheImpl = null;
 
     /**
      * Creates an EntityManager for testing purposes.
@@ -89,13 +55,11 @@ abstract class AbstractOrmTestCase extends TestCase
      * be configured in the tests to simulate the DBAL behavior that is desired
      * for a particular test,
      *
-     * @param array|\Doctrine\DBAL\Connection    $conn
-     * @param null|\Doctrine\Common\EventManager $eventManager
-     * @param bool                               $withSharedMetadata
+     * @param array|Connection $conn
      *
-     * @return \Doctrine\ORM\EntityManager
+     * @throws
      */
-    protected function _getTestEntityManager($conn = null, $eventManager = null, $withSharedMetadata = true)
+    protected function _getTestEntityManager($conn = null, ?EventManager $eventManager = null, bool $withSharedMetadata = true): EntityManager
     {
         $metadataCache = $withSharedMetadata
             ? self::getSharedMetadataCacheImpl()
@@ -143,10 +107,7 @@ abstract class AbstractOrmTestCase extends TestCase
         return Mocks\EntityManagerMock::create($conn, $config, $eventManager);
     }
 
-    /**
-     * @return \Doctrine\Common\Cache\Cache
-     */
-    protected function getSharedSecondLevelCacheDriverImpl()
+    protected function getSharedSecondLevelCacheDriverImpl(): Cache
     {
         if (null === $this->secondLevelCacheDriverImpl) {
             $this->secondLevelCacheDriverImpl = new ArrayCache();
@@ -155,10 +116,7 @@ abstract class AbstractOrmTestCase extends TestCase
         return $this->secondLevelCacheDriverImpl;
     }
 
-    /**
-     * @return \Doctrine\Common\Cache\Cache
-     */
-    private static function getSharedMetadataCacheImpl()
+    private static function getSharedMetadataCacheImpl(): Cache
     {
         if (null === self::$_metadataCacheImpl) {
             self::$_metadataCacheImpl = new ArrayCache();
@@ -167,10 +125,7 @@ abstract class AbstractOrmTestCase extends TestCase
         return self::$_metadataCacheImpl;
     }
 
-    /**
-     * @return \Doctrine\Common\Cache\Cache
-     */
-    private static function getSharedQueryCacheImpl()
+    private static function getSharedQueryCacheImpl(): Cache
     {
         if (null === self::$_queryCacheImpl) {
             self::$_queryCacheImpl = new ArrayCache();

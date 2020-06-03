@@ -42,73 +42,56 @@ class DriverConnectionMock implements Connection
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $prepareString
      */
     public function prepare($prepareString)
     {
         return $this->statementMock ?: new StatementMock();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function query()
     {
         return $this->statementMock ?: new StatementMock();
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $input
+     * @param mixed $type
      */
     public function quote($input, $type = \PDO::PARAM_STR): void
     {
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $statement
      */
     public function exec($statement): void
     {
     }
 
     /**
-     * {@inheritdoc}
+     * @param null|mixed $name
      */
     public function lastInsertId($name = null): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function beginTransaction(): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function commit(): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rollBack(): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function errorCode(): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function errorInfo(): void
     {
     }

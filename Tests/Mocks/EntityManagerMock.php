@@ -32,9 +32,6 @@ class EntityManagerMock extends EntityManager
      */
     private $_proxyFactoryMock;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUnitOfWork()
     {
         return isset($this->_uowMock) ? $this->_uowMock : parent::getUnitOfWork();
@@ -71,7 +68,7 @@ class EntityManagerMock extends EntityManager
     /**
      * Mock factory method to create an EntityManager.
      *
-     * {@inheritdoc}
+     * @param mixed $conn
      */
     public static function create($conn, Configuration $config = null, EventManager $eventManager = null)
     {

@@ -30,7 +30,7 @@ class SqlFilterUtil
      *
      * @return string[]
      */
-    public static function findFilters($om, array $filters, bool $all = false): array
+    public static function findFilters(?ObjectManager $om, array $filters, bool $all = false): array
     {
         if (!$om instanceof EntityManagerInterface || (empty($filters) && !$all)) {
             return [];

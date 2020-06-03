@@ -22,52 +22,31 @@ use Doctrine\ORM\Query\Filter\SQLFilter;
  */
 abstract class AbstractFilter extends SQLFilter implements EnableFilterInterface
 {
-    /**
-     * @var null|EntityManagerInterface
-     */
-    private $entityManager;
+    private ?EntityManagerInterface $entityManager = null;
 
-    /**
-     * @var bool
-     */
-    private $enable = true;
+    private bool $enable = true;
 
-    /**
-     * @var null|\ReflectionProperty
-     */
-    private $refParameters;
+    private ?\ReflectionProperty $refParameters = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function enable(): EnableFilterInterface
+    public function enable(): self
     {
         $this->enable = true;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function disable(): EnableFilterInterface
+    public function disable(): self
     {
         $this->enable = false;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEnabled(): bool
     {
         return $this->enable;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias): string
     {
         if ($this->isEnabled() && $this->supports($targetEntity)) {

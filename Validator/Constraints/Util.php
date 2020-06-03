@@ -11,9 +11,9 @@
 
 namespace Klipper\Component\DoctrineExtensions\Validator\Constraints;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\ObjectManager;
 use Klipper\Component\DoctrineExtensions\Exception\ConstraintDefinitionException;
 use Klipper\Component\DoctrineExtensions\Exception\UnexpectedTypeException;
 use Klipper\Component\DoctrineExtra\Util\ClassUtils;
@@ -72,12 +72,10 @@ class Util
     /**
      * Pre validate entity.
      *
-     * @param object $entity
-     *
      * @throws UnexpectedTypeException
      * @throws ConstraintDefinitionException
      */
-    public static function getObjectManager(ManagerRegistry $registry, $entity, Constraint $constraint): ObjectManager
+    public static function getObjectManager(ManagerRegistry $registry, object $entity, Constraint $constraint): ObjectManager
     {
         self::validateConstraint($constraint);
         /* @var UniqueEntity $constraint */
@@ -109,11 +107,9 @@ class Util
     }
 
     /**
-     * @param object $entity
-     *
      * @throws ConstraintDefinitionException
      */
-    private static function findObjectManager(ManagerRegistry $registry, $entity, UniqueEntity $constraint): ObjectManager
+    private static function findObjectManager(ManagerRegistry $registry, object $entity, UniqueEntity $constraint): ObjectManager
     {
         if ($constraint->em) {
             $em = $registry->getManager($constraint->em);

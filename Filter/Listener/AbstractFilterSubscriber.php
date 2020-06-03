@@ -25,29 +25,15 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 abstract class AbstractFilterSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var bool
-     */
-    protected $injected = false;
+    protected bool $injected = false;
 
-    /**
-     * Constructor.
-     *
-     * @param EntityManagerInterface $entityManager The entity manager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -59,8 +45,6 @@ abstract class AbstractFilterSubscriber implements EventSubscriberInterface
 
     /**
      * Action on the event.
-     *
-     * @param Event $event The event
      */
     public function onEvent(Event $event): void
     {
@@ -101,5 +85,5 @@ abstract class AbstractFilterSubscriber implements EventSubscriberInterface
      *
      * @param SQLFilter $filter The doctrine sql filter
      */
-    abstract protected function injectParameters(SQLFilter $filter);
+    abstract protected function injectParameters(SQLFilter $filter): void;
 }

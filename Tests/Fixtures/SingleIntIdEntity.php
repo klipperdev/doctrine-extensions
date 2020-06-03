@@ -27,17 +27,17 @@ class SingleIntIdEntity
     /**
      * @Column(type="string", nullable=true)
      */
-    public $name;
+    public ?string $name = null;
 
     /**
      * @Column(type="array", nullable=true)
      */
-    public $phoneNumbers = [];
+    public array $phoneNumbers = [];
     /**
      * @Id
      * @Column(type="integer")
      */
-    protected $id;
+    protected ?int $id = null;
 
     public function __construct(?int $id, ?string $name)
     {

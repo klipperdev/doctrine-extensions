@@ -36,68 +36,44 @@ class DatabasePlatformMock extends AbstractPlatform
      */
     private $_prefersSequences = false;
 
-    /**
-     * {@inheritdoc}
-     */
     public function prefersIdentityColumns()
     {
         return $this->_prefersIdentityColumns;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prefersSequences()
     {
         return $this->_prefersSequences;
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $sequenceName
      */
     public function getSequenceNextValSQL($sequenceName)
     {
         return $this->_sequenceNextValSql;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBooleanTypeDeclarationSQL(array $field): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIntegerTypeDeclarationSQL(array $field): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBigIntTypeDeclarationSQL(array $field): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSmallIntTypeDeclarationSQL(array $field): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getVarcharTypeDeclarationSQL(array $field): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClobTypeDeclarationSQL(array $field): void
     {
     }
@@ -128,32 +104,20 @@ class DatabasePlatformMock extends AbstractPlatform
         $this->_sequenceNextValSql = $sql;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'mock';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlobTypeDeclarationSQL(array $field): void
     {
         throw DBALException::notSupported(__METHOD__);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _getCommonIntegerTypeDeclarationSQL(array $columnDef): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function initializeDoctrineTypeMappings(): void
     {
     }

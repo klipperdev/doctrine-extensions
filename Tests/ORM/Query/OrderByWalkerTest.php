@@ -42,9 +42,7 @@ final class OrderByWalkerTest extends AbstractOrmTestCase
             ->useQueryCache(false)
         ;
 
-        $query->setHint(OrderByWalker::HINT_SORT_ALIAS, ['u']);
-        $query->setHint(OrderByWalker::HINT_SORT_FIELD, ['username']);
-        $query->setHint(OrderByWalker::HINT_SORT_DIRECTION, ['desc']);
+        OrderByWalker::addHint($query, ['u'], ['username'], ['desc']);
 
         $expected = 'SELECT u0_.id AS id_0, u0_.username AS username_1 FROM users u0_ ORDER BY u0_.username DESC';
         static::assertSame($expected, $query->getSQL());
@@ -60,9 +58,7 @@ final class OrderByWalkerTest extends AbstractOrmTestCase
             ->useQueryCache(false)
         ;
 
-        $query->setHint(OrderByWalker::HINT_SORT_ALIAS, ['u', 'u']);
-        $query->setHint(OrderByWalker::HINT_SORT_FIELD, ['username', 'id']);
-        $query->setHint(OrderByWalker::HINT_SORT_DIRECTION, ['desc', 'asc']);
+        OrderByWalker::addHint($query, ['u', 'u'], ['username', 'id'], ['desc', 'asc']);
 
         $expected = 'SELECT u0_.id AS id_0, u0_.username AS username_1 FROM users u0_ ORDER BY u0_.username DESC, u0_.id ASC';
         static::assertSame($expected, $query->getSQL());
@@ -115,9 +111,7 @@ final class OrderByWalkerTest extends AbstractOrmTestCase
             ->useQueryCache(false)
         ;
 
-        $query->setHint(OrderByWalker::HINT_SORT_ALIAS, ['a']);
-        $query->setHint(OrderByWalker::HINT_SORT_FIELD, ['username']);
-        $query->setHint(OrderByWalker::HINT_SORT_DIRECTION, ['desc']);
+        OrderByWalker::addHint($query, ['a'], ['username'], ['desc']);
 
         $query->getSQL();
     }
@@ -135,9 +129,7 @@ final class OrderByWalkerTest extends AbstractOrmTestCase
             ->useQueryCache(false)
         ;
 
-        $query->setHint(OrderByWalker::HINT_SORT_ALIAS, ['u']);
-        $query->setHint(OrderByWalker::HINT_SORT_FIELD, ['foo']);
-        $query->setHint(OrderByWalker::HINT_SORT_DIRECTION, ['desc']);
+        OrderByWalker::addHint($query, ['u'], ['foo'], ['desc']);
 
         $query->getSQL();
     }

@@ -11,6 +11,7 @@
 
 namespace Klipper\Component\DoctrineExtensions\ORM\Query;
 
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\AST\OrderByClause;
 use Doctrine\ORM\Query\AST\OrderByItem;
 use Doctrine\ORM\Query\AST\PathExpression;
@@ -40,6 +41,21 @@ class OrderByWalker extends TreeWalkerAdapter
      * Sort direction hint name.
      */
     public const HINT_SORT_DIRECTION = 'klipper_paginator.sort.direction';
+
+    /**
+     * Add or merge the hint value for the joins walker.
+     *
+     * @param Query    $query      The query
+     * @param string[] $aliases    The entity aliases
+     * @param string[] $fieldNames The field names
+     * @param string[] $sorts      The sort directions
+     */
+    public static function addHint(Query $query, array $aliases, array $fieldNames, array $sorts): void
+    {
+        $query->setHint(OrderByWalker::HINT_SORT_ALIAS, $aliases);
+        $query->setHint(OrderByWalker::HINT_SORT_FIELD, $fieldNames);
+        $query->setHint(OrderByWalker::HINT_SORT_DIRECTION, $sorts);
+    }
 
     public function walkSelectStatement(SelectStatement $AST): void
     {

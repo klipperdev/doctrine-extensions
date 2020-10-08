@@ -57,8 +57,8 @@ class UniqueEntityValidator extends ConstraintValidator
         $result = $this->getResult($entity, $constraint, $criteria, $em);
 
         if (!$this->isValidResult($result, $entity)) {
-            $errorPath = $constraint->errorPath ?? $fields[0];
-            $invalidValue = $criteria[$errorPath] ?? $criteria[$fields[0]];
+            $errorPath = $constraint->errorPath ?? $fields[\count($fields) - 1];
+            $invalidValue = $criteria[$errorPath] ?? $criteria[$fields[\count($fields) - 1]];
 
             $this->context->buildViolation($constraint->message)
                 ->atPath($errorPath)

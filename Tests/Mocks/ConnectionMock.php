@@ -11,10 +11,7 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests\Mocks;
 
-use Doctrine\Common\EventManager;
-use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Driver;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
@@ -42,16 +39,9 @@ class ConnectionMock extends Connection
 
     private array $_executeUpdates = [];
 
-    public function __construct(array $params, Driver $driver, ?Configuration $config = null, ?EventManager $eventManager = null)
-    {
-        $this->_platformMock = new DatabasePlatformMock();
-
-        parent::__construct($params, $driver, $config, $eventManager);
-    }
-
     public function getDatabasePlatform()
     {
-        return $this->_platformMock;
+        return $this->_platformMock ?? $this->_platformMock = new DatabasePlatformMock();
     }
 
     /**

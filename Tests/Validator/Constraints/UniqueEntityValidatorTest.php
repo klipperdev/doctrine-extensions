@@ -221,7 +221,7 @@ final class UniqueEntityValidatorTest extends TestCase
         $violation = $violationsList[0];
         static::assertEquals('This value is already used.', $violation->getMessage());
         static::assertEquals('bar', $violation->getPropertyPath());
-        static::assertEquals('Foo', $violation->getInvalidValue());
+        static::assertNull($violation->getInvalidValue());
     }
 
     public function testValidateUniquenessAfterConsideringMultipleQueryResults(): void

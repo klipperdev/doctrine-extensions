@@ -34,7 +34,7 @@ class EntityManagerMock extends EntityManager
 
     public function getUnitOfWork()
     {
-        return isset($this->_uowMock) ? $this->_uowMock : parent::getUnitOfWork();
+        return $this->_uowMock ?? parent::getUnitOfWork();
     }
 
     /* Mock API */
@@ -62,7 +62,7 @@ class EntityManagerMock extends EntityManager
      */
     public function getProxyFactory()
     {
-        return isset($this->_proxyFactoryMock) ? $this->_proxyFactoryMock : parent::getProxyFactory();
+        return $this->_proxyFactoryMock ?? parent::getProxyFactory();
     }
 
     /**

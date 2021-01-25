@@ -50,7 +50,7 @@ class UniqueEntityValidator extends ConstraintValidator
         $fields = (array) $constraint->fields;
         $criteria = $this->getCriteria($entity, $constraint, $em);
 
-        if (null === $criteria) {
+        if (empty($criteria)) {
             return;
         }
 
@@ -77,7 +77,7 @@ class UniqueEntityValidator extends ConstraintValidator
      *
      * @return null|array Null if there is no constraint
      */
-    protected function getCriteria($entity, Constraint $constraint, ObjectManager $em): ?array
+    protected function getCriteria($entity, Constraint $constraint, ObjectManager $em): array
     {
         /** @var UniqueEntity $constraint */
         /** @var \Doctrine\ORM\Mapping\ClassMetadata $class */
@@ -93,7 +93,7 @@ class UniqueEntityValidator extends ConstraintValidator
             }
         }
 
-        return $criteria;
+        return $criteria ?? [];
     }
 
     /**

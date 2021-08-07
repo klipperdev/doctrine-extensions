@@ -11,7 +11,11 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests\Validator\Constraints;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\ORM\Configuration;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\Persistence\ManagerRegistry;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\FooCallbackValidatorClass;
 use Klipper\Component\DoctrineExtensions\Tests\Fixtures\FooCallbackValidatorObject;
@@ -19,7 +23,6 @@ use Klipper\Component\DoctrineExtensions\Validator\Constraints\DoctrineCallback;
 use Klipper\Component\DoctrineExtensions\Validator\Constraints\DoctrineCallbackValidator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\Doctrine\Test\DoctrineTestHelper;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -39,7 +42,7 @@ final class DoctrineCallbackValidatorTest extends TestCase
     protected function setUp(): void
     {
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         /** @var ManagerRegistry $registry */
         $registry = $this->createRegistryMock($entityManagerName, $em);
         $context = $this->getMockBuilder(ExecutionContextInterface::class)
@@ -282,5 +285,26 @@ final class DoctrineCallbackValidatorTest extends TestCase
         ;
 
         return $registry;
+    }
+
+    private function createTestEntityManager(): EntityManager
+    {
+        if (!\extension_loaded('pdo_sqlite')) {
+            TestCase::markTestSkipped('Extension pdo_sqlite is required.');
+        }
+
+        $config = new Configuration();
+        $config->setEntityNamespaces(['SymfonyTestsDoctrine' => 'Symfony\Bridge\Doctrine\Tests\Fixtures']);
+        $config->setAutoGenerateProxyClasses(true);
+        $config->setProxyDir(sys_get_temp_dir());
+        $config->setProxyNamespace('SymfonyTests\Doctrine');
+        $config->setMetadataDriverImpl(new AnnotationDriver(new AnnotationReader()));
+
+        $params = [
+            'driver' => 'pdo_sqlite',
+            'memory' => true,
+        ];
+
+        return EntityManager::create($params, $config);
     }
 }

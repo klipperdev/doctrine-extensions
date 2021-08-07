@@ -11,8 +11,12 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests\Validator\Constraints;
 
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Reflection\StaticReflectionProperty;
+use Doctrine\ORM\Configuration;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -30,7 +34,6 @@ use Klipper\Component\DoctrineExtensions\Validator\Constraints\UniqueEntity;
 use Klipper\Component\DoctrineExtensions\Validator\Constraints\UniqueEntityValidator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\Doctrine\Test\DoctrineTestHelper;
 use Symfony\Component\Translation\IdentityTranslator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidatorFactoryInterface;
@@ -55,7 +58,7 @@ final class UniqueEntityValidatorTest extends TestCase
         /** @var ManagerRegistry $registry */
         /** @var Constraint $constraint */
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $registry = $this->createRegistryMock($entityManagerName, $em);
         $validator = new UniqueEntityValidator($registry);
         $constraint = $this->getMockForAbstractClass(Constraint::class);
@@ -70,7 +73,7 @@ final class UniqueEntityValidatorTest extends TestCase
 
         /** @var ManagerRegistry $registry */
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $registry = $this->createRegistryMock($entityManagerName, $em);
         $validator = new UniqueEntityValidator($registry);
         $constraint = new UniqueEntity(['fields' => 42]);
@@ -85,7 +88,7 @@ final class UniqueEntityValidatorTest extends TestCase
 
         /** @var ManagerRegistry $registry */
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $registry = $this->createRegistryMock($entityManagerName, $em);
         $validator = new UniqueEntityValidator($registry);
         $constraint = new UniqueEntity(['fields' => 'name', 'errorPath' => 42]);
@@ -100,7 +103,7 @@ final class UniqueEntityValidatorTest extends TestCase
 
         /** @var ManagerRegistry $registry */
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $registry = $this->createRegistryMock($entityManagerName, $em);
         $validator = new UniqueEntityValidator($registry);
         $constraint = new UniqueEntity(['fields' => 'name']);
@@ -115,7 +118,7 @@ final class UniqueEntityValidatorTest extends TestCase
         $this->expectException(ConstraintDefinitionException::class);
 
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $this->createSchema($em);
         $validator = $this->createValidator($entityManagerName, $em, null, '42');
         $entity1 = new SingleIntIdEntity(1, 'Foo');
@@ -126,7 +129,7 @@ final class UniqueEntityValidatorTest extends TestCase
     public function testValidateUniqueness(): void
     {
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $this->createSchema($em);
         $validator = $this->createValidator($entityManagerName, $em);
 
@@ -155,7 +158,7 @@ final class UniqueEntityValidatorTest extends TestCase
     public function testValidateCustomErrorPath(): void
     {
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $this->createSchema($em);
         $validator = $this->createValidator($entityManagerName, $em, null, null, 'bar');
 
@@ -179,7 +182,7 @@ final class UniqueEntityValidatorTest extends TestCase
     public function testValidateUniquenessWithNull(): void
     {
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $this->createSchema($em);
         $validator = $this->createValidator($entityManagerName, $em);
 
@@ -198,7 +201,7 @@ final class UniqueEntityValidatorTest extends TestCase
     {
         $entityManagerName = 'foo';
         $validateClass = DoubleNameEntity::class;
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $this->createSchema($em);
         $validator = $this->createValidator($entityManagerName, $em, $validateClass, ['name', 'name2'], 'bar', 'findby', false);
 
@@ -227,7 +230,7 @@ final class UniqueEntityValidatorTest extends TestCase
     public function testValidateUniquenessAfterConsideringMultipleQueryResults(): void
     {
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $this->createSchema($em);
         $validator = $this->createValidator($entityManagerName, $em);
 
@@ -291,7 +294,7 @@ final class UniqueEntityValidatorTest extends TestCase
     public function testAssociatedEntity(): void
     {
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $this->createSchema($em);
         $validator = $this->createValidator($entityManagerName, $em, AssociationEntity::class, ['single']);
 
@@ -319,7 +322,7 @@ final class UniqueEntityValidatorTest extends TestCase
     public function testAssociatedEntityWithNull(): void
     {
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $this->createSchema($em);
         $validator = $this->createValidator($entityManagerName, $em, AssociationEntity::class, ['single'], null, 'findBy', false);
 
@@ -339,7 +342,7 @@ final class UniqueEntityValidatorTest extends TestCase
         $this->expectExceptionMessage('Associated entities are not allowed to have more than one identifier field');
 
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $this->createSchema($em);
         $validator = $this->createValidator($entityManagerName, $em, AssociationEntity::class, ['composite']);
 
@@ -406,7 +409,7 @@ final class UniqueEntityValidatorTest extends TestCase
     public function testDisableAllFilterAndReactivateAfter(): void
     {
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $em->getConfiguration()->addFilter('fooFilter1', FooFilter::class);
         $em->getConfiguration()->addFilter('fooFilter2', FooFilter::class);
         $em->getConfiguration()->addFilter('barFilter1', BarFilter::class);
@@ -428,7 +431,7 @@ final class UniqueEntityValidatorTest extends TestCase
     public function testDisableOneFilterAndReactivateAfter(): void
     {
         $entityManagerName = 'foo';
-        $em = DoctrineTestHelper::createTestEntityManager();
+        $em = $this->createTestEntityManager();
         $em->getConfiguration()->addFilter('fooFilter1', FooFilter::class);
         $em->getConfiguration()->addFilter('fooFilter2', FooFilter::class);
         $em->getConfiguration()->addFilter('barFilter1', BarFilter::class);
@@ -559,5 +562,26 @@ final class UniqueEntityValidatorTest extends TestCase
             $em->getClassMetadata(CompositeIntIdEntity::class),
             $em->getClassMetadata(AssociationEntity::class),
         ]);
+    }
+
+    private function createTestEntityManager(): EntityManager
+    {
+        if (!\extension_loaded('pdo_sqlite')) {
+            TestCase::markTestSkipped('Extension pdo_sqlite is required.');
+        }
+
+        $config = new Configuration();
+        $config->setEntityNamespaces(['SymfonyTestsDoctrine' => 'Symfony\Bridge\Doctrine\Tests\Fixtures']);
+        $config->setAutoGenerateProxyClasses(true);
+        $config->setProxyDir(sys_get_temp_dir());
+        $config->setProxyNamespace('SymfonyTests\Doctrine');
+        $config->setMetadataDriverImpl(new AnnotationDriver(new AnnotationReader()));
+
+        $params = [
+            'driver' => 'pdo_sqlite',
+            'memory' => true,
+        ];
+
+        return EntityManager::create($params, $config);
     }
 }

@@ -12,7 +12,6 @@
 namespace Klipper\Component\DoctrineExtensions\Tests\Validator\Constraints;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Reflection\StaticReflectionProperty;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -486,7 +485,7 @@ final class UniqueEntityValidatorTest extends TestCase
             ->method('hasField')
             ->willReturn(true)
         ;
-        $refl = $this->getMockBuilder(StaticReflectionProperty::class)
+        $refl = $this->getMockBuilder(\ReflectionProperty::class)
             ->disableOriginalConstructor()
             ->setMethods(['getValue'])
             ->getMock()

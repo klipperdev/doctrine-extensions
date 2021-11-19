@@ -11,7 +11,6 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests;
 
-use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
@@ -22,6 +21,8 @@ use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\DoctrineProvider;
 
 /**
  * Tests case for orm.
@@ -37,15 +38,6 @@ abstract class AbstractOrmTestCase extends TestCase
     protected ?CacheFactory $secondLevelCacheFactory = null;
 
     protected ?Cache $secondLevelCacheDriverImpl;
-    /**
-     * The metadata cache that is shared between all ORM tests (except functional tests).
-     */
-    private static ?Cache $_metadataCacheImpl = null;
-
-    /**
-     * The query cache that is shared between all ORM tests (except functional tests).
-     */
-    private static ?Cache $_queryCacheImpl = null;
 
     /**
      * Creates an EntityManager for testing purposes.
@@ -61,15 +53,10 @@ abstract class AbstractOrmTestCase extends TestCase
      */
     protected function _getTestEntityManager($conn = null, ?EventManager $eventManager = null, bool $withSharedMetadata = true): EntityManager
     {
-        $metadataCache = $withSharedMetadata
-            ? self::getSharedMetadataCacheImpl()
-            : new ArrayCache();
-
         $config = new Configuration();
 
-        $config->setMetadataCacheImpl($metadataCache);
-        $config->setMetadataDriverImpl($config->newDefaultAnnotationDriver([], true));
-        $config->setQueryCacheImpl(self::getSharedQueryCacheImpl());
+        $config->setMetadataCache(new ArrayAdapter());
+        $config->setQueryCache(new ArrayAdapter());
         $config->setProxyDir(__DIR__.'/Proxies');
         $config->setProxyNamespace('Klipper\Component\DoctrineExtensions\Tests\Proxies');
         $config->setMetadataDriverImpl($config->newDefaultAnnotationDriver(
@@ -110,27 +97,9 @@ abstract class AbstractOrmTestCase extends TestCase
     protected function getSharedSecondLevelCacheDriverImpl(): Cache
     {
         if (null === $this->secondLevelCacheDriverImpl) {
-            $this->secondLevelCacheDriverImpl = new ArrayCache();
+            $this->secondLevelCacheDriverImpl = new DoctrineProvider(new ArrayAdapter());
         }
 
         return $this->secondLevelCacheDriverImpl;
-    }
-
-    private static function getSharedMetadataCacheImpl(): Cache
-    {
-        if (null === self::$_metadataCacheImpl) {
-            self::$_metadataCacheImpl = new ArrayCache();
-        }
-
-        return self::$_metadataCacheImpl;
-    }
-
-    private static function getSharedQueryCacheImpl(): Cache
-    {
-        if (null === self::$_queryCacheImpl) {
-            self::$_queryCacheImpl = new ArrayCache();
-        }
-
-        return self::$_queryCacheImpl;
     }
 }

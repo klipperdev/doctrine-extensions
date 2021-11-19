@@ -36,6 +36,11 @@ class DatabasePlatformMock extends AbstractPlatform
      */
     private $_prefersSequences = false;
 
+    /**
+     * @var bool
+     */
+    private $_supportsIdentityColumns = true;
+
     public function prefersIdentityColumns()
     {
         return $this->_prefersIdentityColumns;
@@ -44,6 +49,11 @@ class DatabasePlatformMock extends AbstractPlatform
     public function prefersSequences()
     {
         return $this->_prefersSequences;
+    }
+
+    public function supportsIdentityColumns()
+    {
+        return $this->_supportsIdentityColumns;
     }
 
     /**

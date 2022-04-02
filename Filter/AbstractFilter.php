@@ -31,6 +31,8 @@ abstract class AbstractFilter extends SQLFilter implements EnableFilterInterface
     public function enable(): self
     {
         $this->enable = true;
+        // Make sure the hash for the filter will be changed to invalidate the query cache (@see SQLFilter::__toString()).
+        $this->setParameter(sprintf('disabled_%s', __CLASS__), false);
 
         return $this;
     }
@@ -38,6 +40,8 @@ abstract class AbstractFilter extends SQLFilter implements EnableFilterInterface
     public function disable(): self
     {
         $this->enable = false;
+        // Make sure the hash for the filter will be changed to invalidate the query cache (@see SQLFilter::__toString()).
+        $this->setParameter(sprintf('disabled_%s', __CLASS__), true);
 
         return $this;
     }
@@ -49,11 +53,17 @@ abstract class AbstractFilter extends SQLFilter implements EnableFilterInterface
 
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias): string
     {
-        if ($this->isEnabled() && $this->supports($targetEntity)) {
-            return $this->doAddFilterConstraint($targetEntity, $targetTableAlias);
-        }
+        $enabled = $this->isEnabled();
+        $supported = $this->supports($targetEntity);
+        $class = $targetEntity->getName();
+        $filter = $enabled && $supported ? $this->doAddFilterConstraint($targetEntity, $targetTableAlias) : '';
 
-        return '';
+        // Make sure the hash for the filter will be changed to invalidate the query cache (@see SQLFilter::__toString()).
+        $this->setParameter(sprintf('disabled_%s_%s', __CLASS__, $class), !$enabled);
+        $this->setParameter(sprintf('supported_%s_%s', __CLASS__, $class), !$enabled);
+        $this->setParameter(sprintf('sql_cache_%s_%s', __CLASS__, $class), $filter);
+
+        return $filter;
     }
 
     /**

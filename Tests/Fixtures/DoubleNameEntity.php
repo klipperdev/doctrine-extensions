@@ -33,6 +33,7 @@ class DoubleNameEntity
      * @Column(type="string", nullable=true)
      */
     public ?string $name2;
+
     /**
      * @Id
      * @Column(type="integer")

@@ -43,6 +43,7 @@ final class DoctrineCallbackValidatorTest extends TestCase
     {
         $entityManagerName = 'foo';
         $em = $this->createTestEntityManager();
+
         /** @var ManagerRegistry $registry */
         $registry = $this->createRegistryMock($entityManagerName, $em);
         $context = $this->getMockBuilder(ExecutionContextInterface::class)
@@ -224,6 +225,7 @@ final class DoctrineCallbackValidatorTest extends TestCase
         $this->expectException(\Klipper\Component\DoctrineExtensions\Exception\UnexpectedTypeException::class);
 
         $object = new FooCallbackValidatorObject();
+
         /** @var Constraint $constraint */
         $constraint = $this->getMockForAbstractClass(Constraint::class);
 

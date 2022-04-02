@@ -545,6 +545,7 @@ final class UniqueEntityValidatorTest extends TestCase
 
         $metadataFactory = new FakeMetadataFactory();
         $metadataFactory->addMetadata($metadata);
+
         /** @var ConstraintValidatorFactoryInterface $validatorFactory */
         $validatorFactory = $this->createValidatorFactory($uniqueValidator);
         $contextFactory = new ExecutionContextFactory(new IdentityTranslator(), null);

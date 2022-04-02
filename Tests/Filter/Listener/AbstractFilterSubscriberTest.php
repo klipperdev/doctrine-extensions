@@ -36,10 +36,13 @@ final class AbstractFilterSubscriberTest extends TestCase
     {
         /** @var EntityManagerInterface|MockObject $em */
         $em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
+
         /** @var MockObject|RequestEvent $event */
         $event = $this->getMockBuilder(RequestEvent::class)->disableOriginalConstructor()->getMock();
+
         /** @var MockObject|SQLFilter $filter */
         $filter = $this->getMockBuilder(SQLFilter::class)->disableOriginalConstructor()->getMock();
+
         /** @var FilterCollection|MockObject $filterCollection */
         $filterCollection = $this->getMockBuilder(FilterCollection::class)->disableOriginalConstructor()->getMock();
 

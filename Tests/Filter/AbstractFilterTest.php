@@ -48,8 +48,10 @@ final class AbstractFilterTest extends TestCase
     {
         /** @var EntityManagerInterface|MockObject $em */
         $em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
+
         /** @var ClassMetadata|MockObject $meta */
         $meta = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
+
         /** @var Connection|MockObject $connection */
         $connection = $this->getMockBuilder(Connection::class)->disableOriginalConstructor()->getMock();
 

@@ -26,6 +26,7 @@ class CompositeIntIdEntity
 {
     /** @Column(type="string") */
     public string $name;
+
     /**
      * @Id
      * @Column(type="integer")

@@ -63,7 +63,7 @@ class ConnectionMock extends Connection
     /**
      * @param null|mixed $seqName
      *
-     * @return string|int|false
+     * @return false|int|string
      */
     public function lastInsertId($seqName = null)
     {

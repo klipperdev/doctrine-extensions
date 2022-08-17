@@ -19,6 +19,7 @@ use Doctrine\ORM\Cache\CacheFactory;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMSetup;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -58,11 +59,11 @@ abstract class AbstractOrmTestCase extends TestCase
         $config->setQueryCache(new ArrayAdapter());
         $config->setProxyDir(__DIR__.'/Proxies');
         $config->setProxyNamespace('Klipper\Component\DoctrineExtensions\Tests\Proxies');
-        $config->setMetadataDriverImpl($config->newDefaultAnnotationDriver(
+        $config->setMetadataDriverImpl(ORMSetup::createDefaultAnnotationDriver(
             [
                 realpath(__DIR__.'/Models'),
             ],
-            true
+            new ArrayAdapter()
         ));
 
         if ($this->isSecondLevelCacheEnabled) {

@@ -11,7 +11,6 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests;
 
-use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
@@ -21,8 +20,8 @@ use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
-use Symfony\Component\Cache\DoctrineProvider;
 
 /**
  * Tests case for orm.
@@ -37,13 +36,13 @@ abstract class AbstractOrmTestCase extends TestCase
 
     protected ?CacheFactory $secondLevelCacheFactory = null;
 
-    protected ?Cache $secondLevelCacheDriverImpl;
+    protected ?CacheItemPoolInterface $secondLevelCacheDriverImpl;
 
     /**
      * Creates an EntityManager for testing purposes.
      *
      * NOTE: The created EntityManager will have its dependant DBAL parts completely
-     * mocked out using a DriverMock, ConnectionMock, etc. These mocks can then
+     * mocked out using a DriverMock, ConnectionMock, etc. These mock can then
      * be configured in the tests to simulate the DBAL behavior that is desired
      * for a particular test,
      *
@@ -91,13 +90,13 @@ abstract class AbstractOrmTestCase extends TestCase
             $conn = DriverManager::getConnection($conn, $config, $eventManager);
         }
 
-        return Mocks\EntityManagerMock::create($conn, $config, $eventManager);
+        return EntityManager::create($conn, $config, $eventManager);
     }
 
-    protected function getSharedSecondLevelCacheDriverImpl(): Cache
+    protected function getSharedSecondLevelCacheDriverImpl(): CacheItemPoolInterface
     {
         if (null === $this->secondLevelCacheDriverImpl) {
-            $this->secondLevelCacheDriverImpl = new DoctrineProvider(new ArrayAdapter());
+            $this->secondLevelCacheDriverImpl = new ArrayAdapter();
         }
 
         return $this->secondLevelCacheDriverImpl;

@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\DoctrineExtensions\Tests\Mocks;
 
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 /**
@@ -109,7 +109,7 @@ class DatabasePlatformMock extends AbstractPlatform
 
     public function getBlobTypeDeclarationSQL(array $field): void
     {
-        throw DBALException::notSupported(__METHOD__);
+        throw Exception::notSupported(__METHOD__);
     }
 
     protected function _getCommonIntegerTypeDeclarationSQL(array $columnDef): void

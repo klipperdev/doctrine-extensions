@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.4.0|^8.0.0",
         "doctrine/persistence": "^2.0.0",
-        "doctrine/orm": "^2.8.0",
+        "doctrine/orm": "^2.13.0",
         "klipper/doctrine-extra": "^2.0.0"
     },
     "require-dev": {

@@ -21,7 +21,7 @@ use Doctrine\ORM\Query\Filter\SQLFilter;
  */
 class FooFilter extends SQLFilter
 {
-    public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias)
+    public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias): string
     {
         return '';
     }

@@ -14,6 +14,7 @@ namespace Klipper\Component\DoctrineExtensions\Tests\Mocks;
 use Doctrine\Common\EventManager;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\UnitOfWork;
 
 /**
  * Special EntityManager mock used for testing purposes.
@@ -32,7 +33,7 @@ class EntityManagerMock extends EntityManager
      */
     private $_proxyFactoryMock;
 
-    public function getUnitOfWork()
+    public function getUnitOfWork(): UnitOfWork
     {
         return $this->_uowMock ?? parent::getUnitOfWork();
     }
@@ -70,7 +71,7 @@ class EntityManagerMock extends EntityManager
      *
      * @param mixed $conn
      */
-    public static function create($conn, Configuration $config = null, EventManager $eventManager = null)
+    public static function create($conn, Configuration $config = null, EventManager $eventManager = null): self
     {
         if (null === $config) {
             $config = new Configuration();

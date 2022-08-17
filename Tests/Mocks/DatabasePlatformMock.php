@@ -21,37 +21,25 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class DatabasePlatformMock extends AbstractPlatform
 {
-    /**
-     * @var string
-     */
-    private $_sequenceNextValSql = '';
+    private string $_sequenceNextValSql = '';
 
-    /**
-     * @var bool
-     */
-    private $_prefersIdentityColumns = true;
+    private bool $_prefersIdentityColumns = true;
 
-    /**
-     * @var bool
-     */
-    private $_prefersSequences = false;
+    private bool $_prefersSequences = false;
 
-    /**
-     * @var bool
-     */
-    private $_supportsIdentityColumns = true;
+    private bool $_supportsIdentityColumns = true;
 
-    public function prefersIdentityColumns()
+    public function prefersIdentityColumns(): bool
     {
         return $this->_prefersIdentityColumns;
     }
 
-    public function prefersSequences()
+    public function prefersSequences(): bool
     {
         return $this->_prefersSequences;
     }
 
-    public function supportsIdentityColumns()
+    public function supportsIdentityColumns(): bool
     {
         return $this->_supportsIdentityColumns;
     }
@@ -59,7 +47,7 @@ class DatabasePlatformMock extends AbstractPlatform
     /**
      * @param mixed $sequenceName
      */
-    public function getSequenceNextValSQL($sequenceName)
+    public function getSequenceNextValSQL($sequenceName): string
     {
         return $this->_sequenceNextValSql;
     }
@@ -114,7 +102,7 @@ class DatabasePlatformMock extends AbstractPlatform
         $this->_sequenceNextValSql = $sql;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'mock';
     }

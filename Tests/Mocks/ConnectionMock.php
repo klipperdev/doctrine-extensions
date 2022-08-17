@@ -39,7 +39,7 @@ class ConnectionMock extends Connection
 
     private array $_executeUpdates = [];
 
-    public function getDatabasePlatform()
+    public function getDatabasePlatform(): DatabasePlatformMock
     {
         return $this->_platformMock ?? $this->_platformMock = new DatabasePlatformMock();
     }
@@ -62,6 +62,8 @@ class ConnectionMock extends Connection
 
     /**
      * @param null|mixed $seqName
+     *
+     * @return string|int|false
      */
     public function lastInsertId($seqName = null)
     {
@@ -71,6 +73,8 @@ class ConnectionMock extends Connection
     /**
      * @param mixed $statement
      * @param mixed $colnum
+     *
+     * @return mixed
      */
     public function fetchColumn($statement, array $params = [], $colnum = 0, array $types = [])
     {
@@ -89,6 +93,8 @@ class ConnectionMock extends Connection
     /**
      * @param mixed      $input
      * @param null|mixed $type
+     *
+     * @return mixed
      */
     public function quote($input, $type = null)
     {

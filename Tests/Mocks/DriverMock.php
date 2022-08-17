@@ -37,12 +37,12 @@ class DriverMock implements Driver
      * @param null|mixed $username
      * @param null|mixed $password
      */
-    public function connect(array $params, $username = null, $password = null, array $driverOptions = [])
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = []): DriverConnectionMock
     {
         return new DriverConnectionMock();
     }
 
-    public function getDatabasePlatform()
+    public function getDatabasePlatform(): DatabasePlatformMock
     {
         if (!$this->_platformMock) {
             $this->_platformMock = new DatabasePlatformMock();
@@ -51,7 +51,7 @@ class DriverMock implements Driver
         return $this->_platformMock;
     }
 
-    public function getSchemaManager(Connection $conn)
+    public function getSchemaManager(Connection $conn): AbstractSchemaManager
     {
         if (null === $this->_schemaManagerMock) {
             return new SchemaManagerMock($conn);
@@ -70,7 +70,7 @@ class DriverMock implements Driver
         $this->_schemaManagerMock = $sm;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'mock';
     }

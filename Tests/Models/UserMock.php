@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping\Table;
 
 /**
  * @Entity
+ *
  * @Table(name="users")
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -27,7 +28,9 @@ class UserMock
 {
     /**
      * @Id
+     *
      * @Column(type="integer")
+     *
      * @GeneratedValue
      */
     public ?int $id = null;

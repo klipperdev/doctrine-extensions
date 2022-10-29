@@ -73,9 +73,9 @@ class UniqueEntityValidator extends ConstraintValidator
      *
      * @param object $entity
      *
-     * @throws ConstraintDefinitionException
-     *
      * @return null|array Null if there is no constraint
+     *
+     * @throws ConstraintDefinitionException
      */
     protected function getCriteria($entity, Constraint $constraint, ObjectManager $em): array
     {
@@ -133,9 +133,9 @@ class UniqueEntityValidator extends ConstraintValidator
     }
 
     /**
-     * @throws ConstraintDefinitionException
-     *
      * @return null|array The new criteria
+     *
+     * @throws ConstraintDefinitionException
      */
     private function findFieldCriteria(array $criteria, Constraint $constraint, ObjectManager $em, ClassMetadata $class, object $entity, string $fieldName): ?array
     {

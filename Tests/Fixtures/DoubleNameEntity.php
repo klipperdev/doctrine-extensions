@@ -36,6 +36,7 @@ class DoubleNameEntity
 
     /**
      * @Id
+     *
      * @Column(type="integer")
      */
     protected int $id;

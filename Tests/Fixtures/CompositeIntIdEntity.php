@@ -29,12 +29,14 @@ class CompositeIntIdEntity
 
     /**
      * @Id
+     *
      * @Column(type="integer")
      */
     protected int $id1;
 
     /**
      * @Id
+     *
      * @Column(type="integer")
      */
     protected int $id2;

@@ -117,10 +117,10 @@ abstract class AbstractFilter extends SQLFilter implements EnableFilterInterface
      *
      * @param string $name The name of the parameter
      *
+     * @return null|bool|bool[]|float|float[]|int|int[]|string|string[]
+     *
      * @throws \InvalidArgumentException
      * @throws \Exception
-     *
-     * @return null|bool|bool[]|float|float[]|int|int[]|string|string[]
      */
     protected function getRealParameter(string $name)
     {

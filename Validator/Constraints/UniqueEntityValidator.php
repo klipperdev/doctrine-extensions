@@ -87,10 +87,6 @@ class UniqueEntityValidator extends ConstraintValidator
 
         foreach ($fields as $fieldName) {
             $criteria = $this->findFieldCriteria($criteria, $constraint, $em, $class, $entity, $fieldName);
-
-            if (null === $criteria) {
-                break;
-            }
         }
 
         return $criteria ?? [];
@@ -137,7 +133,7 @@ class UniqueEntityValidator extends ConstraintValidator
      *
      * @throws ConstraintDefinitionException
      */
-    private function findFieldCriteria(array $criteria, Constraint $constraint, ObjectManager $em, ClassMetadata $class, object $entity, string $fieldName): ?array
+    private function findFieldCriteria(array $criteria, Constraint $constraint, ObjectManager $em, ClassMetadata $class, object $entity, string $fieldName): array
     {
         $this->validateFieldCriteria($class, $fieldName);
 
@@ -146,7 +142,7 @@ class UniqueEntityValidator extends ConstraintValidator
 
         /** @var UniqueEntity $constraint */
         if ($constraint->ignoreNull && null === $criteria[$fieldName]) {
-            $criteria = null;
+            unset($criteria[$fieldName]);
         } else {
             $this->findFieldCriteriaStep2($criteria, $em, $class, $fieldName);
         }
